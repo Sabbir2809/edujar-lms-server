@@ -2,11 +2,18 @@
 
 const categoryModel = require("../model/categoryModel");
 
-const AllCategories = async (req, res) => {
+const allCategories = async (req, res) => {
     try {
         const categories = await categoryModel.find();
-        res.status(200).json(categories);
+        res.status(200).json({
+            success: true,
+            data: categories
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, error: error.message });
     }
+}
+
+module.exports = {
+    allCategories
 }
