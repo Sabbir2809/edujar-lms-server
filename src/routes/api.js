@@ -1,24 +1,16 @@
 // Dependencies
 const express = require("express");
-const categoryControllers = require("../controllers/categoryController")
-const courseController = require("../controllers/categoryController")
-
+const categoryController = require("../controllers/categoryController");
+const courseController = require("../controllers/courseController");
+const upload = require("../utility/multerConfig");
 const router = express.Router();
 
-// categoryControolers=require
+// Public API Routing Endpoint
+router.get("/all-category", categoryController.getAllCategory);
+router.get("/all-course", courseController.getAllCourse);
 
-// API Routing End Point:
-// Route Task: Tahmid
-
-//Category Controller
-
-
-router.get("/all-categories", categoryControllers.allCategories)
-router.post("/create-course", upload.single("thumbnail"), courseController.createCourse);
-router.get("/allCourses", courseController.getAllCourse)
-// router.post("/update-course/:id",courseController.UpdateCourse)
-
-
+// Private API Routing Endpoint
+router.post("create-course", upload.single("thumbnail"), courseController.createCourse);
 
 // Exports
 module.exports = router;
