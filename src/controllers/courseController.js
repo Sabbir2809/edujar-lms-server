@@ -34,12 +34,30 @@ exports.createCourse = async (req, res) => {
 // get all courses(public)
 exports.getAllCourse = async (req, res) => {
   try {
+    let categoriesJoin = {$lookup:{from:"categories",localField:"categoriesID",foreignField:"_id",as:"category"}}
+    let instructorJoin = {$lookup:{from:"instructors",localField:"instructorID",foreignField:"_id",as:"instructor"}}
+    let Join = {$lookup:{from:"instructors",localField:"instructorID",foreignField:"_id",as:"instructor"}}
+    let unwindCategory = {$unwind:"$category"}
+    let unwindInstructors = {$unwind:"$instructor"}
     let projection = {
       $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
     };
-    let course = await CourseModel.aggregate([projection]);
+    let course = await CourseModel.aggregate([categoriesJoin,instructorJoin,unwindCategory,unwindInstructors,projection]);
     res.status(200).json({ status: true, data: course });
   } catch (error) {
     res.status(200).json({ status: false, data: error });
   }
 };
+//update post
+exports.updateCourse = async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const updatePost = await CourseModel.findByIdAndUpdate(courseId, req.body, {
+      new: true,
+    });
+    res.status(200).json({ status: true, data: updatePost });
+  } catch (error) {
+    res.status(200).json({ status: false, data: error });
+  }
+};
+// router.post("/updateCourse", courseController.updateCourse);
