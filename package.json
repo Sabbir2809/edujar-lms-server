@@ -8,7 +8,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "Sabbir Hossain",
+  "author": "Team Dominators",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
