@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Module 1: Introduction to Web Development",
+    "videoTitle": "Understanding the Basics",
+    "videoURL": "https://example.com/intro_to_web_dev.mp4",
+    "videoResource": "Introduction slides.pdf"
+  },
+  {
+    "title": "Module 2: HTML Fundamentals",
+    "videoTitle": "Building the Structure",
+    "videoURL": "https://example.com/html_fundamentals.mp4",
+    "videoResource": "HTML Cheat Sheet.pdf"
+  },
+  {
+    "title": "Module 3: CSS Styling",
+    "videoTitle": "Styling Your Web Pages",
+    "videoURL": "https://example.com/css_styling.mp4",
+    "videoResource": "CSS Style Guide.pdf"
+  },
+  {
+    "title": "Module 4: JavaScript Basics",
+    "videoTitle": "Introduction to JavaScript",
+    "videoURL": "https://example.com/js_basics.mp4",
+    "videoResource": "JavaScript Reference.pdf"
+  }
+ 
+]

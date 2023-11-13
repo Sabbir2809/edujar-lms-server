@@ -1,0 +1,31 @@
+[
+  {
+    "title": "Web Development Fundamentals",
+    "description": "Learn the basics of web development, including HTML, CSS, and JavaScript.",
+    "thumbnail": [
+      {
+        "publicID": "web_dev_thumbnail_1",
+        "url": "https://example.com/web_dev_thumbnail_1.jpg"
+      }
+    ],
+    "instructorID": "60c7b7908b38d7105c8af132", // Example instructor ID (mongoose.Types.ObjectId)
+    "categoriesID": "60c7b7d98b38d7105c8af131", // Example category ID (mongoose.Types.ObjectId)
+    "lessonID": "60c7b7f38b38d7105c8af133", // Example lesson ID (mongoose.Types.ObjectId)
+    "courseAchiv": "Certificate of Web Development Fundamentals"
+  },
+  {
+    "title": "Graphic Design Essentials",
+    "description": "Explore the principles of graphic design and essential design tools.",
+    "thumbnail": [
+      {
+        "publicID": "graphic_design_thumbnail_1",
+        "url": "https://example.com/graphic_design_thumbnail_1.jpg"
+      }
+    ],
+    "instructorID": "60c7b7908b38d7105c8af132",
+    "categoriesID": "60c7b7e88b38d7105c8af132",
+    "lessonID": "60c7b7f38b38d7105c8af133",
+    "courseAchiv": "Certificate of Graphic Design Essentials"
+  }
+  
+]

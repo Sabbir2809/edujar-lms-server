@@ -1,0 +1,23 @@
+[
+  {
+    "categoryName": "Web Development",
+    "categoryImg": "web_development.jpg"
+  },
+  {
+    "categoryName": "Graphic Design",
+    "categoryImg": "graphic_design.jpg"
+  },
+  {
+    "categoryName": "Digital Marketing",
+    "categoryImg": "digital_marketing.jpg"
+  },
+  {
+    "categoryName": "Photography",
+    "categoryImg": "photography.jpg"
+  },
+  {
+    "categoryName": "Language Learning",
+    "categoryImg": "language_learning.jpg"
+  }
+  
+]
