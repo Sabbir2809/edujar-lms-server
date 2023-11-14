@@ -5,14 +5,7 @@ const courseModel = require("../model/courseModel");
 // create a new course(private)
 exports.adminCreateNewCourse = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      instructorID,
-      categoryID,
-      lessonID,
-      courseAchievement,
-    } = req.body;
+    const {title, description, instructorID, categoryID, lessonID, courseAchievement} = req.body;
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
