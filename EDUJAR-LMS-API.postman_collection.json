@@ -1,14 +1,102 @@
 {
 	"info": {
 		"_postman_id": "a229f840-173d-4379-b279-ad30b6c0dcfd",
-		"name": "Edujar LMS",
+		"name": "EDUJAR-LMS-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15226030"
 	},
 	"item": [
 		{
 			"name": "User",
-			"item": []
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"Md. Sabbir Hossain\",\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/registration",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/login",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/profile-details",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"profile-details"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Course",
@@ -139,6 +227,89 @@
 							],
 							"path": [
 								"all-course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll Course",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userID\":\"655374f7aa637122f5497b11\",\r\n     \"courseID\": \"65530d025ac924e3d04c1152\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/enroll-course",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"enroll-course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll Course Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE-URL}}/enroll-course-info",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"enroll-course-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Course Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE-URL}}/course-details/65530e595ac924e3d04c115e",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"course-details",
+								"65530e595ac924e3d04c115e"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "65530d025ac924e3d04c1152",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -329,6 +500,11 @@
 		{
 			"key": "BASE-URL",
 			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhYmJpcnRvMTNAZ21haWwuY29tIiwicGFzc3dvcmQiOiJzYWJiaXJ0bzEzQGdtYWlsLmNvbSIsImlhdCI6MTY5OTk2ODgxMCwiZXhwIjoxNzAwNTczNjEwfQ.UO-zhCq6AWW7OQnnAr70jzTm31wU1NXXX5X5Z1h3ZQc",
 			"type": "string"
 		}
 	]
