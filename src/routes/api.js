@@ -18,5 +18,6 @@ router.post("/create-new-course", upload.single("thumbnail"), courseController.a
 router.post("/update-existing-course", courseController.adminUpdateExistingCourse);
 router.post("/add-instructor", upload.single("image"), instructorController.addNewInstructor);
 
+
 // Exports
 module.exports = router;
