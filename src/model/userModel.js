@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
 
-const roleType = {
-  user: "user",
-  admin: "admin",
-};
-
 // Schema
 const userSchema = new mongoose.Schema(
   {
@@ -14,7 +9,7 @@ const userSchema = new mongoose.Schema(
     photo: { type: String },
     phoneNumber: { type: String },
     address: { type: String },
-    role: { type: String, enum: Object.values(roleType), default: roleType.user },
+    role: { type: String, default: "user" },
   },
   { timestamps: true, versionKey: false }
 );
