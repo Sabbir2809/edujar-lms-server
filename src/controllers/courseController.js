@@ -36,7 +36,7 @@ exports.getAllCourse = async (req, res) => {
   try {
     let categoriesJoin = {$lookup:{from:"categories",localField:"categoriesID",foreignField:"_id",as:"category"}}
     let instructorJoin = {$lookup:{from:"instructors",localField:"instructorID",foreignField:"_id",as:"instructor"}}
-    let Join = {$lookup:{from:"instructors",localField:"instructorID",foreignField:"_id",as:"instructor"}}
+    // let Join = {$lookup:{from:"instructors",localField:"instructorID",foreignField:"_id",as:"instructor"}}
     let unwindCategory = {$unwind:"$category"}
     let unwindInstructors = {$unwind:"$instructor"}
     let projection = {
