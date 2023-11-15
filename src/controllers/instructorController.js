@@ -24,7 +24,7 @@ exports.addNewInstructor = async (req, res) => {
     await course.save();
     res.status(200).json({ status: true, data: course });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
@@ -34,6 +34,6 @@ exports.getAllInstructor = async (req, res) => {
     const data = await instructorModel.find();
     res.status(200).json({ status: true, data: data });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };

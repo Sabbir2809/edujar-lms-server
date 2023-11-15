@@ -13,6 +13,7 @@ Build an online learning platform with user registration, course creation, video
 1. Get Single Course
 1. Featured Course
 1. Get All Instructor
+1. Get Module Lesson
 
 ## Admin Features:
 
@@ -20,6 +21,7 @@ Build an online learning platform with user registration, course creation, video
 1. Update the Course
 1. Add New Instructor
 1. Enroll Course
+1. Create a New Module Lesson
 
 ### routes Folder api.js file:
 
@@ -34,6 +36,8 @@ const upload = require("../utility/multerConfig");
 const userController = require("../controllers/userController");
 const UserVerifyMiddleware = require("../middleware/UserVerifyMiddleware");
 const enrollmentController = require("../controllers/enrollmentController");
+const moduleLessonController = require("../controllers/moduleLessonController");
+const videoUpload = require("../utility/cloudinaryStorage");
 
 // Public API Routing Endpoint
 router.get("/all-category", categoryController.getAllCategory);
@@ -54,9 +58,11 @@ router.post("/update-existing-course", courseController.adminUpdateExistingCours
 router.post("/add-instructor", upload.single("image"), instructorController.addNewInstructor);
 router.get("/enroll-course", UserVerifyMiddleware, enrollmentController.courseEnroll);
 router.get("/enroll-course-info", enrollmentController.enrollCourseInfo);
+router.post("/create-new-lesson", videoUpload.array("videoURL"), moduleLessonController.adminCreateLesson);
+router.get("/all-lesson", moduleLessonController.getAllLesson);
 
 // Exports
 module.exports = router;
 ```
 
-Main Package: `npm install express cors mongoose dotenv jsonwebtoken bcrypt express-rate-limit helmet npp  express-mongo-sanitize nodemailer nodemon multer cloudinary`
+Main Package: `npm install express cors mongoose dotenv jsonwebtoken bcrypt express-rate-limit helmet npp  express-mongo-sanitize nodemailer nodemon multer cloudinary multer-storage-cloudinary`
