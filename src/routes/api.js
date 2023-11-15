@@ -8,6 +8,8 @@ const upload = require("../utility/multerConfig");
 const userController = require("../controllers/userController");
 const UserVerifyMiddleware = require("../middleware/UserVerifyMiddleware");
 const enrollmentController = require("../controllers/enrollmentController");
+const moduleLessonController = require("../controllers/moduleLessonController");
+const videoUpload = require("../utility/cloudinaryStorage");
 
 // Public API Routing Endpoint
 router.get("/all-category", categoryController.getAllCategory);
@@ -28,6 +30,8 @@ router.post("/update-existing-course", courseController.adminUpdateExistingCours
 router.post("/add-instructor", upload.single("image"), instructorController.addNewInstructor);
 router.get("/enroll-course", UserVerifyMiddleware, enrollmentController.courseEnroll);
 router.get("/enroll-course-info", enrollmentController.enrollCourseInfo);
+router.post("/create-new-lesson", videoUpload.array("videoURL"), moduleLessonController.adminCreateLesson);
+router.get("/all-lesson", moduleLessonController.getAllLesson);
 
 // Exports
 module.exports = router;

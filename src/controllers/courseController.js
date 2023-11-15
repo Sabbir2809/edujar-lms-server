@@ -29,7 +29,7 @@ exports.adminCreateNewCourse = async (req, res) => {
 
     res.status(200).json({ status: true, data: course });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
@@ -42,7 +42,7 @@ exports.adminUpdateExistingCourse = async (req, res) => {
     });
     res.status(200).json({ status: true, data: updatePost });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
@@ -70,7 +70,7 @@ exports.getAllCourse = async (req, res) => {
     ]);
     res.status(200).json({ status: true, data: course });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
@@ -102,7 +102,7 @@ exports.courseDetails = async (req, res) => {
     ]);
     res.status(200).json({ status: true, data: course });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
@@ -112,6 +112,6 @@ exports.featuredCourse = async (req, res) => {
     const featuresCourse = await courseModel.find({}).sort({ createdAt: -1 }).limit(4);
     res.status(200).json({ status: true, data: featuresCourse });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };

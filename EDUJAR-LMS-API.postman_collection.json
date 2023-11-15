@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\": \"Md. Sabbir Hossain\",\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"fullName\": \"Ebad\",\r\n    \"email\": \"ebad@gmail.com\",\r\n    \"password\": \"ebad@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"ebad@gmail.com\",\r\n    \"password\": \"ebad@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,7 +248,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userID\":\"655374f7aa637122f5497b11\",\r\n     \"courseID\": \"65530d025ac924e3d04c1152\"\r\n}",
+							"raw": "{\r\n    \"userID\":\"6553b15525a3c2ccea587701\",\r\n     \"courseID\": \"65530d025ac924e3d04c1152\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -474,6 +474,87 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Module Lesson",
+			"item": [
+				{
+					"name": "Create New Lesson",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseID\": \"65530d025ac924e3d04c1152\",\r\n    \"title\": \"Semantic\",\r\n    \"videoTitle\": \"HTML Semantic Elements\",\r\n    \"resourse\": \"Demo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/create-new-lesson",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"create-new-lesson"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Lesson",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Md. Sabbir Hossain",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "sabbirto13@gamil.com",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "I'm a Web Developer",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/DCL/Downloads/avater.jpg"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "01829723692",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/all-lesson",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"all-lesson"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -504,7 +585,7 @@
 		},
 		{
 			"key": "TOKEN",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhYmJpcnRvMTNAZ21haWwuY29tIiwicGFzc3dvcmQiOiJzYWJiaXJ0bzEzQGdtYWlsLmNvbSIsImlhdCI6MTY5OTk2ODgxMCwiZXhwIjoxNzAwNTczNjEwfQ.UO-zhCq6AWW7OQnnAr70jzTm31wU1NXXX5X5Z1h3ZQc",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImViYWRAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlYmFkQGdtYWlsLmNvbSIsImlhdCI6MTY5OTk4MzcxNCwiZXhwIjoxNzAwNTg4NTE0fQ.Fb5w5WgEyyjSGvjTumMA0dHaGnUxStW7wPu0QTWgfZU",
 			"type": "string"
 		}
 	]
