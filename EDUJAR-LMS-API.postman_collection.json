@@ -38,7 +38,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"sabbir@gmail.com\",\r\n    \"password\": \"sabbir@gmail.com\"\r\n}",
+              "raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -69,7 +69,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"sabbir@gmail.com\",\r\n    \"password\": \"sabbir@gmail.com\"\r\n}",
+              "raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -97,7 +97,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n            \"fullName\": \"Ebad Bhai\",\r\n            \"email\": \"ebad@gmail.com\",\r\n            \"password\": \"$2b$08$Cla2csR9X1O0H4Dh4ZB8/uC9AwKBBqbt4nA9GMmQ82dS5Y9mX16Fq\",\r\n            \"role\": \"user\",\r\n            \"createdAt\": \"2023-11-14T17:41:41.604Z\",\r\n            \"updatedAt\": \"2023-11-14T17:41:41.604Z\"\r\n}",
+              "raw": "{\r\n            \"role\": \"admin\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -125,9 +125,9 @@
               }
             ],
             "url": {
-              "raw": "{{BASE-URL}}/verify-email/sabbir@gmail.com",
+              "raw": "{{BASE-URL}}/verify-email/sabbirto13@gmail.com",
               "host": ["{{BASE-URL}}"],
-              "path": ["verify-email", "sabbir@gmail.com"]
+              "path": ["verify-email", "sabbirto13@gmail.com"]
             }
           },
           "response": []
@@ -145,9 +145,9 @@
               }
             ],
             "url": {
-              "raw": "{{BASE-URL}}/verify-otp/sabbir@gmail.com/419175",
+              "raw": "{{BASE-URL}}/verify-otp/sabbirto13@gmail.com/419175",
               "host": ["{{BASE-URL}}"],
-              "path": ["verify-otp", "sabbir@gmail.com", "419175"]
+              "path": ["verify-otp", "sabbirto13@gmail.com", "419175"]
             }
           },
           "response": []
@@ -166,7 +166,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"sabbir@gmail.com\",\r\n    \"otp\": \"419175\",\r\n    \"password\": \"sabbir@gmail.com\"\r\n}",
+              "raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"otp\": \"419175\",\r\n    \"password\": \"sabbirto13\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -190,7 +190,13 @@
           "name": "Create a New Course(Admin)",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "formdata",
               "formdata": [
@@ -207,7 +213,7 @@
                 {
                   "key": "thumbnail",
                   "type": "file",
-                  "src": "/C:/Users/DCL/Downloads/course2.png"
+                  "src": "/C:/Users/DCL/Downloads/avater.jpg"
                 },
                 {
                   "key": "instructorID",
@@ -243,51 +249,26 @@
           "name": "Update Existing Couse(Admin)",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "title",
-                  "value": "Graphic Design Essentials",
-                  "type": "text"
-                },
-                {
-                  "key": "description",
-                  "value": "Explore the principles of graphic design and essential design tools.",
-                  "type": "text"
-                },
-                {
-                  "key": "thumbnail",
-                  "type": "file",
-                  "src": "/C:/Users/DCL/Downloads/course2.png"
-                },
-                {
-                  "key": "instructorID",
-                  "value": "65530dd65ac924e3d04c1155",
-                  "type": "text"
-                },
-                {
-                  "key": "categoryID",
-                  "value": "65524e346d11e8af29def4fd",
-                  "type": "text"
-                },
-                {
-                  "key": "lessonID",
-                  "value": "65524e346d11e8af29def4fd",
-                  "type": "text"
-                },
-                {
-                  "key": "courseAchievement",
-                  "value": "Certificate of Graphic Design Essentials",
-                  "type": "text"
+              "mode": "raw",
+              "raw": "    {    \r\n        \"title\": \"Graphic Design\",\r\n        \"description\": \"Explore the principles of graphic design\",\r\n        \"instructorID\": \"65530dd65ac924e3d04c1155\",\r\n        \"categoryID\": \"65524e346d11e8af29def4fd\",\r\n        \"lessonID\": \"65524e346d11e8af29def4fd\",\r\n        \"courseAchievement\": \"Certificate of Graphic Design\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
                 }
-              ]
+              }
             },
             "url": {
-              "raw": "{{BASE-URL}}/update-existing-course",
+              "raw": "{{BASE-URL}}/update-existing-course/655cb5909f7e7080f9b62da5",
               "host": ["{{BASE-URL}}"],
-              "path": ["update-existing-course"]
+              "path": ["update-existing-course", "655cb5909f7e7080f9b62da5"]
             }
           },
           "response": []
@@ -428,23 +409,29 @@
           "name": "Create Instructor",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "formdata",
               "formdata": [
                 {
                   "key": "name",
-                  "value": "Md Rasel Kibrai",
+                  "value": "M M A Tahmid",
                   "type": "text"
                 },
                 {
                   "key": "email",
-                  "value": "mdraselkibria11@gmail.com",
+                  "value": "abdfg048@gmail.com",
                   "type": "text"
                 },
                 {
                   "key": "description",
-                  "value": "I'm a Graphic Design",
+                  "value": "I'm a Web Developer",
                   "type": "text"
                 },
                 {
@@ -454,7 +441,12 @@
                 },
                 {
                   "key": "phoneNumber",
-                  "value": "01729723692",
+                  "value": "01929723692",
+                  "type": "text"
+                },
+                {
+                  "key": "token",
+                  "value": "{{TOKEN}}",
                   "type": "text"
                 }
               ]
@@ -485,7 +477,7 @@
                 },
                 {
                   "key": "email",
-                  "value": "sabbir@gmail.com@gamil.com",
+                  "value": "sabbirto13@gamil.com",
                   "type": "text"
                 },
                 {
@@ -522,7 +514,13 @@
           "name": "Create New Lesson",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "formdata",
               "formdata": [
@@ -568,7 +566,13 @@
           },
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "formdata",
               "formdata": [
@@ -579,7 +583,7 @@
                 },
                 {
                   "key": "email",
-                  "value": "sabbir@gmail.com@gamil.com",
+                  "value": "sabbirto13@gamil.com",
                   "type": "text"
                 },
                 {
@@ -600,9 +604,9 @@
               ]
             },
             "url": {
-              "raw": "{{BASE-URL}}/all-lesson",
+              "raw": "{{BASE-URL}}/get-all-lesson",
               "host": ["{{BASE-URL}}"],
-              "path": ["all-lesson"]
+              "path": ["get-all-lesson"]
             }
           },
           "response": []
