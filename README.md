@@ -6,7 +6,8 @@ Build an online learning platform with user registration, course creation, video
 
 1. Registration
 1. Login
-1. Profile Details
+1. User Profile Details and Update
+1. Email Verify, OTP Verify and Forget Password
 1. Get All Category
 1. Top Category
 1. Get All Course
@@ -39,6 +40,15 @@ const enrollmentController = require("../controllers/enrollmentController");
 const moduleLessonController = require("../controllers/moduleLessonController");
 const videoUpload = require("../utility/cloudinaryStorage");
 
+// User
+router.post("/registration", userController.registration);
+router.post("/login", userController.login);
+router.get("/user-profile-details", UserVerifyMiddleware, userController.userProfileDetails);
+router.put("/user-profile-update", UserVerifyMiddleware, userController.userProfileUpdate);
+router.get("/verify-email/:email", userController.verifyEmail);
+router.get("/verify-otp/:email/:otp", userController.verifyOTP);
+router.post("/reset-password", userController.resetPassword);
+
 // Public API Routing Endpoint
 router.get("/all-category", categoryController.getAllCategory);
 router.get("/top-categories", categoryController.topCategories);
@@ -46,11 +56,6 @@ router.get("/all-course", courseController.getAllCourse);
 router.get("/course-details/:id", courseController.courseDetails);
 router.get("/featured-course", courseController.featuredCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
-
-// User
-router.post("/registration", userController.registration);
-router.post("/login", userController.login);
-router.get("/profile-details", UserVerifyMiddleware, userController.profileDetails);
 
 // Private API Routing Endpoint
 router.post("/create-new-course", upload.single("thumbnail"), courseController.adminCreateNewCourse);
