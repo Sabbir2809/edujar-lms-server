@@ -1,9 +1,16 @@
 const instructorModel = require("../model/instructorModel");
+const userModel = require("../model/userModel");
 const cloudinary = require("../utility/cloudinaryConfig");
 
 // Create Instructor(private)
 exports.addNewInstructor = async (req, res) => {
   try {
+    const adminEmail = req.headers.email;
+    const data = await userModel.findOne({ email: adminEmail });
+    if (data.role === "user") {
+      return res.status(403).json({ status: false, message: "Forbidden Access" });
+    }
+
     const { name, email, description, phoneNumber } = req.body;
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });

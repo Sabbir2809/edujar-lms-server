@@ -29,6 +29,11 @@ exports.courseEnroll = async (req, res) => {
 // enrollment user(private)
 exports.enrollCourseInfo = async (req, res) => {
   try {
+    const enrollEmail = req.headers.email;
+    if (!enrollEmail) {
+      return res.status(403).json({ status: false, message: "Forbidden Access" });
+    }
+
     const userJoin = {
       $lookup: { from: "users", localField: "userID", foreignField: "_id", as: "user" },
     };

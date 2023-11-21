@@ -1,8 +1,15 @@
 const moduleLessonModel = require("../model/moduleLessonModel");
+const userModel = require("../model/userModel");
 
 // create a new lesson(private)
 exports.adminCreateLesson = async (req, res) => {
   try {
+    const adminEmail = req.headers.email;
+    const data = await userModel.findOne({ email: adminEmail });
+    if (data.role === "user") {
+      return res.status(403).json({ status: false, message: "Forbidden Access" });
+    }
+
     const { courseID, title, videoTitle, resource } = req.body;
     const videoFileUrl = req.files.map((file) => file.path); //for upload multiple video
 
