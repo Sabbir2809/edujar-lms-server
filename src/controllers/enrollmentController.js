@@ -40,9 +40,13 @@ exports.enrollCourseInfo = async (req, res) => {
     const courseJoin = {
       $lookup: { from: "courses", localField: "courseID", foreignField: "_id", as: "course" },
     };
+    const lessonJoin = {
+      $lookup: { from: "modules", localField: "moduleID", foreignField: "_id", as: "CourseModule" },
+    };
 
     const unwindUser = { $unwind: "$user" };
     const unwindCourse = { $unwind: "$course" };
+    const unwindModule = { $unwind: "$CourseModule" };
     const projection = {
       $project: { "course.thumbnail.publicID": 0, "course.thumbnail._id": 0, "user.password": 0 },
     };
@@ -50,8 +54,10 @@ exports.enrollCourseInfo = async (req, res) => {
     const enrollData = await enrollmentModel.aggregate([
       userJoin,
       courseJoin,
+      lessonJoin,
       unwindUser,
       unwindCourse,
+      unwindModule,
       projection,
     ]);
 
