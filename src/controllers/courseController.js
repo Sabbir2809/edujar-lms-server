@@ -1,19 +1,31 @@
 const cloudinary = require("../utility/cloudinaryConfig");
-const CourseModel = require("../model/courseModel");
 const courseModel = require("../model/courseModel");
+const mongoose = require("mongoose");
+const userModel = require("../model/userModel");
 
-// create a new course(private)
+// (admin) create a new course
 exports.adminCreateNewCourse = async (req, res) => {
   try {
+<<<<<<< HEAD
     const {title, description, instructorID, categoryID, lessonID, courseAchievement} = req.body;
+=======
+    const adminEmail = req.headers.email;
+    const data = await userModel.findOne({ email: adminEmail });
+    if (data.role === "user") {
+      return res.status(403).json({ status: false, message: "Forbidden Access" });
+    }
+
+    const { title, description, instructorID, categoryID, lessonID, courseAchievement } = req.body;
+
+>>>>>>> b09ad2a8e13e0533035439305b00d9c43d632884
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-    let imageUpload = await cloudinary.uploader.upload(req.file.path, {
+    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
       folder: "edujar/thumbnail",
     });
 
-    let course = await new CourseModel({
+    const course = await new courseModel({
       title,
       description,
       thumbnail: {
@@ -27,28 +39,41 @@ exports.adminCreateNewCourse = async (req, res) => {
     });
     await course.save();
 
-    res.status(200).json({ status: true, data: course });
+    res.status(200).json({
+      status: true,
+      data: course,
+    });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
-// Updated Course (Private)
+// (admin) Update Course
 exports.adminUpdateExistingCourse = async (req, res) => {
   try {
+    const adminEmail = req.headers.email;
+    const data = await userModel.findOne({ email: adminEmail });
+    if (data.role === "user") {
+      return res.status(403).json({ status: false, message: "Forbidden Access" });
+    }
+
     const courseId = req.params.id;
-    const updatePost = await CourseModel.findByIdAndUpdate(courseId, req.body, {
+    const updatePost = await courseModel.findByIdAndUpdate(courseId, req.body, {
       new: true,
     });
-    res.status(200).json({ status: true, data: updatePost });
+    res.status(200).json({
+      status: true,
+      data: updatePost,
+    });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
 // get all courses(public)
 exports.getAllCourse = async (req, res) => {
   try {
+<<<<<<< HEAD
     let categoriesJoin = {
       $lookup: {
         from: "categories",
@@ -76,9 +101,21 @@ exports.getAllCourse = async (req, res) => {
     let unwindCategory = { $unwind: "$category" };
     let unwindInstructors = { $unwind: "$instructor" };
     let projection = {
+=======
+    const categoriesJoin = {
+      $lookup: { from: "categories", localField: "categoryID", foreignField: "_id", as: "category" },
+    };
+    const instructorJoin = {
+      $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
+    };
+    const unwindCategory = { $unwind: "$category" };
+    const unwindInstructors = { $unwind: "$instructor" };
+    const projection = {
+>>>>>>> b09ad2a8e13e0533035439305b00d9c43d632884
       $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
     };
-    let course = await CourseModel.aggregate([
+
+    const course = await courseModel.aggregate([
       categoriesJoin,
       instructorJoin,
       unwindCategory,
@@ -87,11 +124,43 @@ exports.getAllCourse = async (req, res) => {
     ]);
     res.status(200).json({ status: true, data: course });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 
-// featured course(public)
+// single courseDetails (public)
+exports.courseDetails = async (req, res) => {
+  try {
+    const courseId = new mongoose.Types.ObjectId(req.params.id);
+
+    const match = { $match: { _id: courseId } };
+    const categoriesJoin = {
+      $lookup: { from: "categories", localField: "categoryID", foreignField: "_id", as: "category" },
+    };
+    const instructorJoin = {
+      $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
+    };
+    const unwindCategory = { $unwind: "$category" };
+    const unwindInstructors = { $unwind: "$instructor" };
+    const projection = {
+      $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
+    };
+
+    const course = await courseModel.aggregate([
+      match,
+      categoriesJoin,
+      instructorJoin,
+      unwindCategory,
+      unwindInstructors,
+      projection,
+    ]);
+    res.status(200).json({ status: true, data: course });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+};
+
+// featured course (public)
 exports.featuredCourse = async (req, res) => {
   try {
     const featuresCourse = await courseModel
@@ -100,7 +169,7 @@ exports.featuredCourse = async (req, res) => {
       .limit(4);
     res.status(200).json({ status: true, data: featuresCourse });
   } catch (error) {
-    res.status(200).json({ status: false, error: error.message });
+    res.status(500).json({ status: false, error: error.message });
   }
 };
 //update post
