@@ -7,12 +7,13 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({ success: false, message: "Token missing, Unauthorized" });
   }
   // decode token
-  const decoded = DecodedToken(token, process.env.JWT_SECRET_KEY);
+  const decoded = DecodedToken(token);
 
   if (!decoded) {
     return res.status(401).json({ success: false, message: "Token missing, Unauthorized User" });
   }
   // decoded info
   req.decoded = decoded;
+  req.headers.email = decoded.email;
   next();
 };

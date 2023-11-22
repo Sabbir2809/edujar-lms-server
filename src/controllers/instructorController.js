@@ -8,10 +8,10 @@ exports.addNewInstructor = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-    let imageUpload = await cloudinary.uploader.upload(req.file.path, {
+    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
       folder: "edujar/instructors",
     });
-    let course = await new instructorModel({
+    const course = await new instructorModel({
       name,
       email,
       description,
@@ -31,7 +31,7 @@ exports.addNewInstructor = async (req, res) => {
 // Get All Instructors(public)
 exports.getAllInstructor = async (req, res) => {
   try {
-    let data = await instructorModel.find();
+    const data = await instructorModel.find();
     res.status(200).json({ status: true, data: data });
   } catch (error) {
     res.status(200).json({ status: false, error: error.message });

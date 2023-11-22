@@ -1,6 +1,6 @@
 const cloudinary = require("../utility/cloudinaryConfig");
-const CourseModel = require("../model/courseModel");
 const courseModel = require("../model/courseModel");
+const mongoose = require("mongoose");
 
 // create a new course(private)
 exports.adminCreateNewCourse = async (req, res) => {
@@ -9,11 +9,11 @@ exports.adminCreateNewCourse = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-    let imageUpload = await cloudinary.uploader.upload(req.file.path, {
+    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
       folder: "edujar/thumbnail",
     });
 
-    let course = await new CourseModel({
+    const course = await new courseModel({
       title,
       description,
       thumbnail: {
@@ -49,21 +49,51 @@ exports.adminUpdateExistingCourse = async (req, res) => {
 // get all courses(public)
 exports.getAllCourse = async (req, res) => {
   try {
-    let categoriesJoin = {
+    const categoriesJoin = {
       $lookup: { from: "categories", localField: "categoryID", foreignField: "_id", as: "category" },
     };
-    let instructorJoin = {
+    const instructorJoin = {
       $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
     };
-    let Join = {
-      $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
-    };
-    let unwindCategory = { $unwind: "$category" };
-    let unwindInstructors = { $unwind: "$instructor" };
-    let projection = {
+    const unwindCategory = { $unwind: "$category" };
+    const unwindInstructors = { $unwind: "$instructor" };
+    const projection = {
       $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
     };
-    let course = await CourseModel.aggregate([
+
+    const course = await courseModel.aggregate([
+      categoriesJoin,
+      instructorJoin,
+      unwindCategory,
+      unwindInstructors,
+      projection,
+    ]);
+    res.status(200).json({ status: true, data: course });
+  } catch (error) {
+    res.status(200).json({ status: false, error: error.message });
+  }
+};
+
+// single courseDetails(public)
+exports.courseDetails = async (req, res) => {
+  try {
+    const courseId = new mongoose.Types.ObjectId(req.params.id);
+
+    const match = { $match: { _id: courseId } };
+    const categoriesJoin = {
+      $lookup: { from: "categories", localField: "categoryID", foreignField: "_id", as: "category" },
+    };
+    const instructorJoin = {
+      $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
+    };
+    const unwindCategory = { $unwind: "$category" };
+    const unwindInstructors = { $unwind: "$instructor" };
+    const projection = {
+      $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
+    };
+
+    const course = await courseModel.aggregate([
+      match,
       categoriesJoin,
       instructorJoin,
       unwindCategory,
