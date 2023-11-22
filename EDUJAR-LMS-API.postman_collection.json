@@ -1,511 +1,645 @@
 {
-	"info": {
-		"_postman_id": "a229f840-173d-4379-b279-ad30b6c0dcfd",
-		"name": "EDUJAR-LMS-API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15226030"
-	},
-	"item": [
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "Registration",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"fullName\": \"Md. Sabbir Hossain\",\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/registration",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"registration"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/login",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User Profile",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/profile-details",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"profile-details"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Course",
-			"item": [
-				{
-					"name": "Create a New Course(Admin)",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "title",
-									"value": "Graphic Design Essentials",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Explore the principles of graphic design and essential design tools.",
-									"type": "text"
-								},
-								{
-									"key": "thumbnail",
-									"type": "file",
-									"src": "/C:/Users/DCL/Downloads/course2.png"
-								},
-								{
-									"key": "instructorID",
-									"value": "65530dd65ac924e3d04c1155",
-									"type": "text"
-								},
-								{
-									"key": "categoryID",
-									"value": "65524e346d11e8af29def4fd",
-									"type": "text"
-								},
-								{
-									"key": "lessonID",
-									"value": "65524e346d11e8af29def4fd",
-									"type": "text"
-								},
-								{
-									"key": "courseAchievement",
-									"value": "Certificate of Graphic Design Essentials",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/create-new-course",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"create-new-course"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Existing Couse(Admin)",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "title",
-									"value": "Graphic Design Essentials",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Explore the principles of graphic design and essential design tools.",
-									"type": "text"
-								},
-								{
-									"key": "thumbnail",
-									"type": "file",
-									"src": "/C:/Users/DCL/Downloads/course2.png"
-								},
-								{
-									"key": "instructorID",
-									"value": "65530dd65ac924e3d04c1155",
-									"type": "text"
-								},
-								{
-									"key": "categoryID",
-									"value": "65524e346d11e8af29def4fd",
-									"type": "text"
-								},
-								{
-									"key": "lessonID",
-									"value": "65524e346d11e8af29def4fd",
-									"type": "text"
-								},
-								{
-									"key": "courseAchievement",
-									"value": "Certificate of Graphic Design Essentials",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/update-existing-course",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"update-existing-course"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Courses",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/all-course",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"all-course"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Enroll Course",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userID\":\"655374f7aa637122f5497b11\",\r\n     \"courseID\": \"65530d025ac924e3d04c1152\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/enroll-course",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"enroll-course"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Enroll Course Info",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{TOKEN}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{BASE-URL}}/enroll-course-info",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"enroll-course-info"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Course Details",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/course-details/65530e595ac924e3d04c115e",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"course-details",
-								"65530e595ac924e3d04c115e"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "65530d025ac924e3d04c1152",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Featured Course",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/featured-course",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"featured-course"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Category",
-			"item": [
-				{
-					"name": "Get All Category",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/all-category",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"all-category"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Top Categories",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/top-categories",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"top-categories"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Instructor",
-			"item": [
-				{
-					"name": "Create Instructor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Md Rasel Kibrai",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "mdraselkibria11@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "I'm a Graphic Design",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": "/C:/Users/DCL/Downloads/avater.jpg"
-								},
-								{
-									"key": "phoneNumber",
-									"value": "01729723692",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/add-instructor",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"add-instructor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Instructor",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Md. Sabbir Hossain",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "sabbirto13@gamil.com",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "I'm a Web Developer",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": "/C:/Users/DCL/Downloads/avater.jpg"
-								},
-								{
-									"key": "phoneNumber",
-									"value": "01829723692",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{BASE-URL}}/all-instructor",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"all-instructor"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "BASE-URL",
-			"value": "http://localhost:8000/api/v1",
-			"type": "string"
-		},
-		{
-			"key": "TOKEN",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhYmJpcnRvMTNAZ21haWwuY29tIiwicGFzc3dvcmQiOiJzYWJiaXJ0bzEzQGdtYWlsLmNvbSIsImlhdCI6MTY5OTk2ODgxMCwiZXhwIjoxNzAwNTczNjEwfQ.UO-zhCq6AWW7OQnnAr70jzTm31wU1NXXX5X5Z1h3ZQc",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "a229f840-173d-4379-b279-ad30b6c0dcfd",
+    "name": "EDUJAR-LMS-API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "15226030"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullName\": \"Ebad\",\r\n    \"email\": \"ebad@gmail.com\",\r\n    \"password\": \"ebad@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/registration",
+              "host": ["{{BASE-URL}}"],
+              "path": ["registration"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/login",
+              "host": ["{{BASE-URL}}"],
+              "path": ["login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"password\": \"sabbirto13@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/user-profile-details",
+              "host": ["{{BASE-URL}}"],
+              "path": ["user-profile-details"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Profile Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n            \"role\": \"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/user-profile-update",
+              "host": ["{{BASE-URL}}"],
+              "path": ["user-profile-update"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Email",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{BASE-URL}}/verify-email/sabbirto13@gmail.com",
+              "host": ["{{BASE-URL}}"],
+              "path": ["verify-email", "sabbirto13@gmail.com"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{BASE-URL}}/verify-otp/sabbirto13@gmail.com/419175",
+              "host": ["{{BASE-URL}}"],
+              "path": ["verify-otp", "sabbirto13@gmail.com", "419175"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"sabbirto13@gmail.com\",\r\n    \"otp\": \"419175\",\r\n    \"password\": \"sabbirto13\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/reset-password",
+              "host": ["{{BASE-URL}}"],
+              "path": ["reset-password"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Course",
+      "item": [
+        {
+          "name": "Create a New Course(Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Graphic Design Essentials",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Explore the principles of graphic design and essential design tools.",
+                  "type": "text"
+                },
+                {
+                  "key": "thumbnail",
+                  "type": "file",
+                  "src": "/C:/Users/DCL/Downloads/avater.jpg"
+                },
+                {
+                  "key": "instructorID",
+                  "value": "65530dd65ac924e3d04c1155",
+                  "type": "text"
+                },
+                {
+                  "key": "categoryID",
+                  "value": "65524e346d11e8af29def4fd",
+                  "type": "text"
+                },
+                {
+                  "key": "lessonID",
+                  "value": "65524e346d11e8af29def4fd",
+                  "type": "text"
+                },
+                {
+                  "key": "courseAchievement",
+                  "value": "Certificate of Graphic Design Essentials",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/create-new-course",
+              "host": ["{{BASE-URL}}"],
+              "path": ["create-new-course"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Existing Couse(Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "    {    \r\n        \"title\": \"Graphic Design\",\r\n        \"description\": \"Explore the principles of graphic design\",\r\n        \"instructorID\": \"65530dd65ac924e3d04c1155\",\r\n        \"categoryID\": \"65524e346d11e8af29def4fd\",\r\n        \"lessonID\": \"65524e346d11e8af29def4fd\",\r\n        \"courseAchievement\": \"Certificate of Graphic Design\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/update-existing-course/655cb5909f7e7080f9b62da5",
+              "host": ["{{BASE-URL}}"],
+              "path": ["update-existing-course", "655cb5909f7e7080f9b62da5"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE-URL}}/all-course",
+              "host": ["{{BASE-URL}}"],
+              "path": ["all-course"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Enroll Course",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userID\":\"6553b15525a3c2ccea587701\",\r\n     \"courseID\": \"65530d025ac924e3d04c1152\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/enroll-course",
+              "host": ["{{BASE-URL}}"],
+              "path": ["enroll-course"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Enroll Course Info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE-URL}}/enroll-course-info",
+              "host": ["{{BASE-URL}}"],
+              "path": ["enroll-course-info"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Course Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE-URL}}/course-details/65530e595ac924e3d04c115e",
+              "host": ["{{BASE-URL}}"],
+              "path": ["course-details", "65530e595ac924e3d04c115e"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "65530d025ac924e3d04c1152",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Featured Course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE-URL}}/featured-course",
+              "host": ["{{BASE-URL}}"],
+              "path": ["featured-course"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Get All Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE-URL}}/all-category",
+              "host": ["{{BASE-URL}}"],
+              "path": ["all-category"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Top Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE-URL}}/top-categories",
+              "host": ["{{BASE-URL}}"],
+              "path": ["top-categories"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Instructor",
+      "item": [
+        {
+          "name": "Create Instructor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "M M A Tahmid",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "abdfg048@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "I'm a Web Developer",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/DCL/Downloads/avater.jpg"
+                },
+                {
+                  "key": "phoneNumber",
+                  "value": "01929723692",
+                  "type": "text"
+                },
+                {
+                  "key": "token",
+                  "value": "{{TOKEN}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/add-instructor",
+              "host": ["{{BASE-URL}}"],
+              "path": ["add-instructor"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Instructor",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Md. Sabbir Hossain",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "sabbirto13@gamil.com",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "I'm a Web Developer",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/DCL/Downloads/avater.jpg"
+                },
+                {
+                  "key": "phoneNumber",
+                  "value": "01829723692",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/all-instructor",
+              "host": ["{{BASE-URL}}"],
+              "path": ["all-instructor"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Module Lesson",
+      "item": [
+        {
+          "name": "Create New Lesson",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "courseID",
+                  "value": "65530d025ac924e3d04c1152",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Semantic",
+                  "type": "text"
+                },
+                {
+                  "key": "videoTitle",
+                  "value": "HTML Semantic Elements",
+                  "type": "text"
+                },
+                {
+                  "key": "videoURL",
+                  "type": "file",
+                  "src": "/D:/Development/Course/React 18 for Beginners/8-Project - Building a Video Game Discovery App (3h)/117-41- What's Next.mp4"
+                },
+                {
+                  "key": "resource",
+                  "value": "Demo",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/create-new-lesson",
+              "host": ["{{BASE-URL}}"],
+              "path": ["create-new-lesson"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Lesson",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "{{TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Md. Sabbir Hossain",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "sabbirto13@gamil.com",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "I'm a Web Developer",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/C:/Users/DCL/Downloads/avater.jpg"
+                },
+                {
+                  "key": "phoneNumber",
+                  "value": "01829723692",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE-URL}}/get-all-lesson",
+              "host": ["{{BASE-URL}}"],
+              "path": ["get-all-lesson"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE-URL",
+      "value": "http://localhost:8000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "TOKEN",
+      "value": "",
+      "type": "string"
+    }
+  ]
 }

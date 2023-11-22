@@ -5,6 +5,7 @@ const dataSchema = mongoose.Schema(
   {
     userID: { type: mongoose.Schema.Types.ObjectId, required: true },
     courseID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    moduleID: { type: mongoose.Schema.Types.ObjectId, required: true },
   },
   { timestamps: true, versionKey: false }
 );

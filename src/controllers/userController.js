@@ -1,86 +1,8 @@
-<<<<<<< HEAD
-
-
-var jwt = require("jsonwebtoken");
-const bcrypt = require('bcrypt');
-const userModels = require("../model/userModel")
-
-exports.Registration = async (req, res) => {
-
-
-    let reqBody = (req.body)
-
-    try {
-        let result = await userModels.create(reqBody)
-        res.status(200).json({ status: "true", data: result })
-    }
-    catch (error) {
-        res.status(200).json({ status: "Fail", data: error })
-
-    }
-
-
-}
-
-
-
-
-// Login (In Login create Token)
-
-exports.Login = async (req, res) => {
-    try {
-        let reqBody = req.body
-        let result = await userModels.find(reqBody).count("total"); // Counting 1 means --> user ase
-
-        if (result === 1) {
-            // Create JSON Web Token or Token Issue
-
-            let payload = {
-                exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60),
-                data: req.body["email"]
-            }
-
-            let token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
-
-            res.status(200).json({ status: "true", data: token })
-        }
-
-        else {
-            res.status(200).json({ status: "Fail", data: error })
-
-        }
-
-    }
-
-    catch (error) {
-        res.status(200).json({ status: "Fail", data: error })
-    }
-}
-
-
-// READ PROFILE
-
-exports.ProfileDetails = async (req, res) => {
-    try {
-        let email = req.headers['email'];
-        let result = await userModels.find({ email: email });
-        res.status(200).json({ status: "true", data: result })
-    }
-
-    catch (error) {
-
-        res.status(200).json({ status: "Fail", data: error })
-
-    }
-
-}
-
-
-
-=======
 const bcrypt = require("bcrypt");
 const userModel = require("../model/userModel");
 const { EncodedToken } = require("../utility/Token");
+const { sendEmailWithNodeMailer } = require("../utility/sendEmailWithNodeMailer");
+const OTPModel = require("../model/otpModel");
 
 // Registration
 exports.registration = async (req, res) => {
@@ -150,7 +72,7 @@ exports.login = async (req, res) => {
 };
 
 // User Profile Get
-exports.profileDetails = async (req, res) => {
+exports.userProfileDetails = async (req, res) => {
   try {
     const email = req.headers.email;
 
@@ -164,4 +86,113 @@ exports.profileDetails = async (req, res) => {
     res.status(500).json({ status: false, error: error.message });
   }
 };
->>>>>>> c0262d8305abaeaedbee2e2924524c8fdf063bbb
+
+// Profile Update
+exports.userProfileUpdate = async (req, res) => {
+  try {
+    const email = req.headers.email;
+    const profileBody = req.body;
+
+    const data = await userModel.updateOne({ email }, profileBody);
+
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+};
+
+// Verify Email
+exports.verifyEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+    // OTP Generate
+    const OTP = Math.floor(100000 + Math.random() * 900000);
+
+    // Email Query
+    const existEmail = await userModel.aggregate([{ $match: { email } }, { $count: "total" }]);
+
+    if (existEmail.length > 0) {
+      // OTP Insert
+      await OTPModel.create({ email, otp: OTP });
+      // email format & send email with nodemailer
+      const emailData = {
+        email,
+        subject: "Edujar LMS",
+        html: `
+          <p>Hi, ${email}</p>
+          <h1>Your Verify OTP Code: ${OTP}</h1>
+          `,
+      };
+      await sendEmailWithNodeMailer(emailData);
+
+      res.status(200).json({
+        status: true,
+        message: "Verification OTP Send, Please Check Your Given Email Address",
+      });
+    } else {
+      res.status(400).json({ success: false, message: "Email Not Found" });
+    }
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+};
+
+// Verify OTP
+exports.verifyOTP = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const otp = req.params.otp;
+
+    // Email Query
+    const OTPCount = await OTPModel.aggregate([{ $match: { email, otp, status: 0 } }, { $count: "total" }]);
+
+    if (OTPCount.length > 0) {
+      const data = await OTPModel.updateOne(
+        { email, otp, status: 0 },
+        { email, otp, status: 1 },
+        { upsert: true }
+      );
+
+      res.status(200).json({
+        status: true,
+        message: "Verify OTP",
+        data: data,
+      });
+    } else {
+      res.status(400).json({ success: false, message: "OTP Code Already Used" });
+    }
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+};
+
+// Reset Password
+exports.resetPassword = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const otp = req.body.otp;
+    const newPassword = req.body.password;
+
+    // Email Query
+    const OTPCount = await OTPModel.aggregate([{ $match: { email, otp, status: 1 } }, { $count: "total" }]);
+
+    if (OTPCount.length > 0) {
+      // Hashed Password
+      const hashedPassword = await bcrypt.hash(newPassword, 8);
+      const data = await userModel.updateOne({ email }, { password: hashedPassword });
+
+      res.status(200).json({
+        status: true,
+        message: "Successfully Password Reset",
+        data: data,
+      });
+    } else {
+      res.status(400).json({ success: false, message: "Invalid Email or Password" });
+    }
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+};
