@@ -16,13 +16,13 @@ app.use(mongoSanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes
+app.use("/api/v1", router);
+
 // Health API
 app.get("/", (req, res) => {
   res.status(200).send("Edujar LMS API: All is Well");
 });
-
-// Routes
-app.use("/api/v1", router);
 
 // Exports
 module.exports = app;
