@@ -21,7 +21,7 @@ app.use("/api/v1", router);
 
 // Health API
 app.get("/", (req, res) => {
-  res.status(200).send("Edujar LMS API: All is Well");
+  res.status(200).send("Edujar LMS REST API: All is Well");
 });
 
 // Exports
