@@ -15,8 +15,16 @@ const AdminVerifyMiddleware = require("../middleware/AdminVerifyMiddleware");
 // User Profile API Endpoint:
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
-router.get("/user-profile-details", UserVerifyMiddleware, userController.userProfileDetails);
-router.put("/user-profile-update", UserVerifyMiddleware, userController.userProfileUpdate);
+router.get(
+  "/user-profile-details",
+  UserVerifyMiddleware,
+  userController.userProfileDetails
+);
+router.put(
+  "/user-profile-update",
+  UserVerifyMiddleware,
+  userController.userProfileUpdate
+);
 router.get("/verify-email/:email", userController.verifyEmail);
 router.get("/verify-otp/:email/:otp", userController.verifyOTP);
 router.post("/reset-password", userController.resetPassword);
@@ -30,9 +38,17 @@ router.get("/featured-course", courseController.featuredCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
 
 // (Private) API Endpoint:
-router.get("/enroll-course", UserVerifyMiddleware, enrollmentController.courseEnroll);
-router.get("/enroll-course-info", UserVerifyMiddleware, enrollmentController.enrollCourseInfo);
-router.get("/get-all-lesson", UserVerifyMiddleware, moduleLessonController.getAllLesson);
+router.get(
+  "/enroll-course",
+  UserVerifyMiddleware,
+  enrollmentController.courseEnroll
+);
+router.get(
+  "/enroll-course-info",
+  UserVerifyMiddleware,
+  enrollmentController.enrollCourseInfo
+);
+router.get("/get-all-lesson", moduleLessonController.getAllLesson);
 
 // (Admin) API Endpoint:
 router.post(

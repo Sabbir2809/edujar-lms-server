@@ -6,18 +6,23 @@ const userModel = require("../model/userModel");
 // (admin) create a new course
 exports.adminCreateNewCourse = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const {title, description, instructorID, categoryID, lessonID, courseAchievement} = req.body;
-=======
     const adminEmail = req.headers.email;
     const data = await userModel.findOne({ email: adminEmail });
     if (data.role === "user") {
-      return res.status(403).json({ status: false, message: "Forbidden Access" });
+      return res
+        .status(403)
+        .json({ status: false, message: "Forbidden Access" });
     }
 
-    const { title, description, instructorID, categoryID, lessonID, courseAchievement } = req.body;
+    const {
+      title,
+      description,
+      instructorID,
+      categoryID,
+      lessonID,
+      courseAchievement,
+    } = req.body;
 
->>>>>>> b09ad2a8e13e0533035439305b00d9c43d632884
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
@@ -54,7 +59,9 @@ exports.adminUpdateExistingCourse = async (req, res) => {
     const adminEmail = req.headers.email;
     const data = await userModel.findOne({ email: adminEmail });
     if (data.role === "user") {
-      return res.status(403).json({ status: false, message: "Forbidden Access" });
+      return res
+        .status(403)
+        .json({ status: false, message: "Forbidden Access" });
     }
 
     const courseId = req.params.id;
@@ -73,8 +80,7 @@ exports.adminUpdateExistingCourse = async (req, res) => {
 // get all courses(public)
 exports.getAllCourse = async (req, res) => {
   try {
-<<<<<<< HEAD
-    let categoriesJoin = {
+    const categoriesJoin = {
       $lookup: {
         from: "categories",
         localField: "categoryID",
@@ -82,36 +88,17 @@ exports.getAllCourse = async (req, res) => {
         as: "category",
       },
     };
-    let instructorJoin = {
-      $lookup: {
-        from: "instructors",
-        localField: "instructorID",
-        foreignField: "_id",
-        as: "instructor",
-      },
-    };
-    let Join = {
-      $lookup: {
-        from: "instructors",
-        localField: "instructorID",
-        foreignField: "_id",
-        as: "instructor",
-      },
-    };
-    let unwindCategory = { $unwind: "$category" };
-    let unwindInstructors = { $unwind: "$instructor" };
-    let projection = {
-=======
-    const categoriesJoin = {
-      $lookup: { from: "categories", localField: "categoryID", foreignField: "_id", as: "category" },
-    };
     const instructorJoin = {
-      $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
+      $lookup: {
+        from: "instructors",
+        localField: "instructorID",
+        foreignField: "_id",
+        as: "instructor",
+      },
     };
     const unwindCategory = { $unwind: "$category" };
     const unwindInstructors = { $unwind: "$instructor" };
     const projection = {
->>>>>>> b09ad2a8e13e0533035439305b00d9c43d632884
       $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
     };
 
@@ -135,10 +122,20 @@ exports.courseDetails = async (req, res) => {
 
     const match = { $match: { _id: courseId } };
     const categoriesJoin = {
-      $lookup: { from: "categories", localField: "categoryID", foreignField: "_id", as: "category" },
+      $lookup: {
+        from: "categories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
     };
     const instructorJoin = {
-      $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
+      $lookup: {
+        from: "instructors",
+        localField: "instructorID",
+        foreignField: "_id",
+        as: "instructor",
+      },
     };
     const unwindCategory = { $unwind: "$category" };
     const unwindInstructors = { $unwind: "$instructor" };
