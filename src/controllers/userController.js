@@ -7,7 +7,7 @@ const OTPModel = require("../model/otpModel");
 // Registration
 exports.registration = async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName, email,phoneNumber, password } = req.body;
 
     // password validation
     if (password.length < 4) {
@@ -28,6 +28,7 @@ exports.registration = async (req, res) => {
     await userModel.create({
       fullName,
       email,
+	  phoneNumber,
       password: hashedPassword,
     });
 

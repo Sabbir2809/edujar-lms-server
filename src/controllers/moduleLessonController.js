@@ -1,7 +1,7 @@
 const moduleLessonModel = require("../model/moduleLessonModel");
 const userModel = require("../model/userModel");
 
-// create a new lesson(private)
+// create a new lesson (private)
 exports.adminCreateLesson = async (req, res) => {
   try {
     const adminEmail = req.headers.email;
@@ -11,23 +11,25 @@ exports.adminCreateLesson = async (req, res) => {
         .status(403)
         .json({ status: false, message: "Forbidden Access" });
     }
+    const { courseID, lessonTitle, resource } = req.body;
+    const videoFileUrls = req.files.map((file) => ({
+      videoTitle: file.originalname, // You can adjust this based on your needs
+      videoURL: file.path,
+    }));
 
-    const { courseID, title, videoTitle, resource } = req.body;
-    const videoFileUrl = req.files.map((file) => file.path); //for upload multiple video
-
-    const lesson = await new moduleLessonModel({
+    const lesson = await moduleLessonModel.create({
       courseID,
-      title,
-      videoTitle,
+      lessonTitle,
       resource,
-      videoURL: videoFileUrl,
+      videos: videoFileUrls,
     });
-    await lesson.save();
+
     res.status(200).json({ status: true, data: lesson });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
   }
 };
+
 
 // get all lesson
 exports.getAllLesson = async (req, res) => {
