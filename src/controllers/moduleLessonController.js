@@ -10,17 +10,19 @@ exports.adminCreateLesson = async (req, res) => {
       return res.status(403).json({ status: false, message: "Forbidden Access" });
     }
 
-    const { courseID, title, videoTitle, resource } = req.body;
-    const videoFileUrl = req.files.map((file) => file.path); //for upload multiple video
+    const { courseID, lessonTitle, resource } = req.body;
+    const videoFileUrls = req.files.map((file) => ({
+      videoTitle: file.originalname, // You can adjust this based on your needs
+      videoURL: file.path,
+    }));
 
-    const lesson = await new moduleLessonModel({
+    const lesson = await moduleLessonModel.create({
       courseID,
-      title,
-      videoTitle,
+      lessonTitle,
       resource,
-      videoURL: videoFileUrl,
+      videos: videoFileUrls,
     });
-    await lesson.save();
+
     res.status(200).json({ status: true, data: lesson });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
@@ -31,8 +33,8 @@ exports.adminCreateLesson = async (req, res) => {
 exports.getAllLesson = async (req, res) => {
   try {
     const lesson = await moduleLessonModel.find();
-    res.status(200).json({ status: true, data: lesson });
+    res.status(200).json({ success: true, data: lesson });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };

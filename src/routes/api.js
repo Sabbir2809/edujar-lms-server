@@ -26,13 +26,13 @@ router.get("/all-category", categoryController.getAllCategory);
 router.get("/top-categories", categoryController.topCategories);
 router.get("/all-course", courseController.getAllCourse);
 router.get("/course-details/:id", courseController.courseDetails);
-router.get("/featured-course", courseController.featuredCourse);
+router.get("/popular-course", courseController.popularCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
 
 // (Private) API Endpoint:
 router.get("/enroll-course", UserVerifyMiddleware, enrollmentController.courseEnroll);
 router.get("/enroll-course-info", UserVerifyMiddleware, enrollmentController.enrollCourseInfo);
-router.get("/get-all-lesson", UserVerifyMiddleware, moduleLessonController.getAllLesson);
+router.get("/get-all-lesson", moduleLessonController.getAllLesson);
 
 // (Admin) API Endpoint:
 router.post(
@@ -59,7 +59,7 @@ router.post(
   "/create-new-lesson",
   UserVerifyMiddleware,
   AdminVerifyMiddleware,
-  videoUpload.array("videoURL"),
+  videoUpload.array("videos"),
   moduleLessonController.adminCreateLesson
 );
 
