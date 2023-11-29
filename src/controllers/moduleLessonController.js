@@ -17,6 +17,15 @@ exports.adminCreateLesson = async (req, res) => {
       videoURL: file.path,
     }));
 
+<<<<<<< HEAD
+=======
+    const { courseID, lessonTitle, resource } = req.body;
+    const videoFileUrls = req.files.map((file) => ({
+      videoTitle: file.originalname, // You can adjust this based on your needs
+      videoURL: file.path,
+    }));
+
+>>>>>>> dbcd7aecd7657e1ce7cd3e6bed443c856e26f079
     const lesson = await moduleLessonModel.create({
       courseID,
       lessonTitle,
@@ -34,9 +43,13 @@ exports.adminCreateLesson = async (req, res) => {
 // get all lesson
 exports.getAllLesson = async (req, res) => {
   try {
+    const enrollEmail = req.headers.email;
+    if (!enrollEmail) {
+      return res.status(403).json({ success: false, message: "Forbidden Access" });
+    }
     const lesson = await moduleLessonModel.find();
-    res.status(200).json({ status: true, data: lesson });
+    res.status(200).json({ success: true, data: lesson });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };

@@ -34,7 +34,7 @@ router.get("/all-category", categoryController.getAllCategory);
 router.get("/top-categories", categoryController.topCategories);
 router.get("/all-course", courseController.getAllCourse);
 router.get("/course-details/:id", courseController.courseDetails);
-router.get("/featured-course", courseController.featuredCourse);
+router.get("/popular-course", courseController.popularCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
 
 // (Private) API Endpoint:

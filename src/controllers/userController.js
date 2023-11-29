@@ -34,11 +34,11 @@ exports.registration = async (req, res) => {
 
     // response
     res.status(201).json({
-      status: true,
+      success: true,
       message: "User Registration Successful",
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -63,12 +63,12 @@ exports.login = async (req, res) => {
 
     // response
     res.status(200).json({
-      status: true,
+      success: true,
       message: "User Login Successful",
       token: token,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -80,11 +80,11 @@ exports.userProfileDetails = async (req, res) => {
     const data = await userModel.aggregate([{ $match: { email } }]);
 
     res.status(200).json({
-      status: true,
+      success: true,
       data: data,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -97,11 +97,11 @@ exports.userProfileUpdate = async (req, res) => {
     const data = await userModel.updateOne({ email }, profileBody);
 
     res.status(200).json({
-      status: true,
+      success: true,
       data: data,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -130,14 +130,14 @@ exports.verifyEmail = async (req, res) => {
       await sendEmailWithNodeMailer(emailData);
 
       res.status(200).json({
-        status: true,
+        success: true,
         message: "Verification OTP Send, Please Check Your Given Email Address",
       });
     } else {
       res.status(400).json({ success: false, message: "Email Not Found" });
     }
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -158,7 +158,7 @@ exports.verifyOTP = async (req, res) => {
       );
 
       res.status(200).json({
-        status: true,
+        success: true,
         message: "Verify OTP",
         data: data,
       });
@@ -166,7 +166,7 @@ exports.verifyOTP = async (req, res) => {
       res.status(400).json({ success: false, message: "OTP Code Already Used" });
     }
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -194,6 +194,6 @@ exports.resetPassword = async (req, res) => {
       res.status(400).json({ success: false, message: "Invalid Email or Password" });
     }
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
