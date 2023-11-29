@@ -73,8 +73,8 @@ router.post(
 );
 router.post(
   "/create-new-lesson",
-  // UserVerifyMiddleware,
-  // AdminVerifyMiddleware,
+  UserVerifyMiddleware,
+  AdminVerifyMiddleware,
   videoUpload.array("videos"),
   moduleLessonController.adminCreateLesson
 );
