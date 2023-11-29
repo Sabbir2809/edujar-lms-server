@@ -32,7 +32,7 @@ router.get("/all-instructor", instructorController.getAllInstructor);
 // (Private) API Endpoint:
 router.get("/enroll-course", UserVerifyMiddleware, enrollmentController.courseEnroll);
 router.get("/enroll-course-info", UserVerifyMiddleware, enrollmentController.enrollCourseInfo);
-router.get("/get-all-lesson", moduleLessonController.getAllLesson);
+router.get("/get-all-lesson", UserVerifyMiddleware, moduleLessonController.getAllLesson);
 
 // (Admin) API Endpoint:
 router.post(

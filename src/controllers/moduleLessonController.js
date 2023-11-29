@@ -32,6 +32,10 @@ exports.adminCreateLesson = async (req, res) => {
 // get all lesson
 exports.getAllLesson = async (req, res) => {
   try {
+    const enrollEmail = req.headers.email;
+    if (!enrollEmail) {
+      return res.status(403).json({ success: false, message: "Forbidden Access" });
+    }
     const lesson = await moduleLessonModel.find();
     res.status(200).json({ success: true, data: lesson });
   } catch (error) {

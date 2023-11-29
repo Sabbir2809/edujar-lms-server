@@ -127,7 +127,7 @@ exports.courseDetails = async (req, res) => {
   }
 };
 
-// featured course (public)
+// popular course (public)
 exports.popularCourse = async (req, res) => {
   try {
     const featuresCourse = await courseModel.find({}).sort({ createdAt: -1 }).limit(4);
@@ -136,3 +136,7 @@ exports.popularCourse = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+// TODO: courseByCategory
+
+// TODO:
