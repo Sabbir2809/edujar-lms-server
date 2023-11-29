@@ -22,7 +22,7 @@ exports.courseEnroll = async (req, res) => {
       data: enrollData,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -31,7 +31,7 @@ exports.enrollCourseInfo = async (req, res) => {
   try {
     const enrollEmail = req.headers.email;
     if (!enrollEmail) {
-      return res.status(403).json({ status: false, message: "Forbidden Access" });
+      return res.status(403).json({ success: false, message: "Forbidden Access" });
     }
 
     const userJoin = {
@@ -66,6 +66,6 @@ exports.enrollCourseInfo = async (req, res) => {
       data: enrollData,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
