@@ -2,6 +2,7 @@ const cloudinary = require("../utility/cloudinaryConfig");
 const courseModel = require("../model/courseModel");
 const mongoose = require("mongoose");
 const userModel = require("../model/userModel");
+const ObjectId = mongoose.Types.ObjectId;
 
 // (admin) create a new course
 exports.adminCreateNewCourse = async (req, res) => {
@@ -14,18 +15,15 @@ exports.adminCreateNewCourse = async (req, res) => {
         .json({ status: false, message: "Forbidden Access" });
     }
 
-<<<<<<< HEAD
     const {
       title,
+      price,
       description,
       instructorID,
       categoryID,
       lessonID,
       courseAchievement,
     } = req.body;
-=======
-    const { title, price, description, instructorID, categoryID, lessonID, courseAchievement } = req.body;
->>>>>>> dbcd7aecd7657e1ce7cd3e6bed443c856e26f079
 
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
@@ -165,37 +163,36 @@ exports.courseDetails = async (req, res) => {
 // popular course (public)
 exports.popularCourse = async (req, res) => {
   try {
-<<<<<<< HEAD
     const featuresCourse = await courseModel
       .find({})
       .sort({ createdAt: -1 })
       .limit(4);
-    res.status(200).json({ status: true, data: featuresCourse });
-=======
-    const featuresCourse = await courseModel.find({}).sort({ createdAt: -1 }).limit(4);
     res.status(200).json({ success: true, data: featuresCourse });
->>>>>>> dbcd7aecd7657e1ce7cd3e6bed443c856e26f079
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 };
-<<<<<<< HEAD
-//update post
-exports.updateCourse = async (req, res) => {
-  try {
-    const courseId = req.params.id;
-    const updatePost = await CourseModel.findByIdAndUpdate(courseId, req.body, {
-      new: true,
-    });
-    res.status(200).json({ status: true, data: updatePost });
-  } catch (error) {
-    res.status(200).json({ status: false, data: error });
-  }
-};
-// router.post("/updateCourse", courseController.updateCourse);
-=======
 
 // TODO: courseByCategory
+exports.courseByCategory = async (req, res) => {
+  try {
+    const categoryID = new ObjectId(req.params.id);
+    const matchID = { $match: { categoryID: categoryID } };
+    const projectionStage = {
+      $project: {
+        categoryID: 0,
+        courseAchievement: 0,
+        createdAt: 0,
+        instructorID: 0,
+        lessonID: 0,
+        updatedAt: 0,
+      },
+    };
+    const data = await courseModel.aggregate([matchID, projectionStage]);
+    res.status(200).json({ success: true, data: data });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
 
 // TODO:
->>>>>>> dbcd7aecd7657e1ce7cd3e6bed443c856e26f079

@@ -36,6 +36,7 @@ router.get("/all-course", courseController.getAllCourse);
 router.get("/course-details/:id", courseController.courseDetails);
 router.get("/popular-course", courseController.popularCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
+router.get("/course-by-category/:id", courseController.courseByCategory);
 
 // (Private) API Endpoint:
 router.get(
@@ -48,7 +49,11 @@ router.get(
   UserVerifyMiddleware,
   enrollmentController.enrollCourseInfo
 );
-router.get("/get-all-lesson", moduleLessonController.getAllLesson);
+router.get(
+  "/get-all-lesson",
+  UserVerifyMiddleware,
+  moduleLessonController.getAllLesson
+);
 
 // (Admin) API Endpoint:
 router.post(
