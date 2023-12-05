@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\": \"Tahmid\",\r\n    \"email\": \"abdfg048@gmail.com\",\r\n    \"password\": \"abdfg048@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"fullName\": \"Demo\",\r\n    \"email\": \"demo@gmail.com\",\r\n    \"password\": \"demo@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"abdfg048@gmail.com\",\r\n    \"password\": \"abdfg048@\"\r\n}",
+							"raw": "{\r\n    \"email\": \"demo@gmail.com\",\r\n    \"password\": \"demo@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,7 +109,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\": \"M M A Tahmid\"\r\n}",
+							"raw": "{\r\n    \"fullName\": \"Md Sabbir Hossain\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -141,13 +141,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{BASE-URL}}/verify-email/abdfg048@gmail.com",
+							"raw": "{{BASE-URL}}/verify-email/sabbirto13@gmail.com",
 							"host": [
 								"{{BASE-URL}}"
 							],
 							"path": [
 								"verify-email",
-								"abdfg048@gmail.com"
+								"sabbirto13@gmail.com"
 							]
 						}
 					},
@@ -166,14 +166,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{BASE-URL}}/verify-otp/abdfg048@gmail.com/416606",
+							"raw": "{{BASE-URL}}/verify-otp/abdfg048@gmail.com/218502",
 							"host": [
 								"{{BASE-URL}}"
 							],
 							"path": [
 								"verify-otp",
 								"abdfg048@gmail.com",
-								"416606"
+								"218502"
 							]
 						}
 					},
@@ -215,6 +215,118 @@
 			]
 		},
 		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Create a New Category(Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "categoryName",
+									"value": "Data Engineering",
+									"type": "text"
+								},
+								{
+									"key": "courseQuantity",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "categoryImg",
+									"type": "file",
+									"src": "/C:/Users/DCL/Desktop/Dominators/DataEngineering.png"
+								},
+								{
+									"key": "instructorID",
+									"value": "65530dd65ac924e3d04c1155",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "categoryID",
+									"value": "65524e346d11e8af29def500",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lessonID",
+									"value": "65524e346d11e8af29def4fd",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "courseAchievement",
+									"value": "Certificate of Graphic Design Essentials",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "200",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE-URL}}/create-new-category",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"create-new-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE-URL}}/all-category",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"all-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE-URL}}/top-categories",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"top-categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Course",
 			"item": [
 				{
@@ -233,42 +345,52 @@
 							"formdata": [
 								{
 									"key": "title",
-									"value": "Graphic Design Essentials",
+									"value": "Database for Software Developers",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "2000",
+									"type": "text"
+								},
+								{
+									"key": "courseLevel",
+									"value": "Advanced",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "Explore the principles of graphic design and essential design tools.",
+									"value": "Every software developer works with more or less databases. But there are very few of them who can create an efficient data model by understanding the project requirements. Working with multimillion record datasets while maintaining performance and preparing the database for potential scalability is a dream for many.",
+									"type": "text"
+								},
+								{
+									"key": "courseDuration",
+									"value": "2",
 									"type": "text"
 								},
 								{
 									"key": "thumbnail",
 									"type": "file",
-									"src": "/C:/Users/DCL/Desktop/Dominators/images.jpeg"
+									"src": "/C:/Users/DCL/Desktop/Dominators/database.jpg"
+								},
+								{
+									"key": "courseAchievement",
+									"value": "Complete the course and get a sharable course completion certificate",
+									"type": "text"
 								},
 								{
 									"key": "instructorID",
-									"value": "65530dd65ac924e3d04c1155",
+									"value": "656eb61f0199fa905515bbfa",
 									"type": "text"
 								},
 								{
 									"key": "categoryID",
-									"value": "65524e346d11e8af29def4fd",
+									"value": "656ec2bf4bce5a16b07eb76c",
 									"type": "text"
 								},
 								{
-									"key": "lessonID",
-									"value": "65524e346d11e8af29def4fd",
-									"type": "text"
-								},
-								{
-									"key": "courseAchievement",
-									"value": "Certificate of Graphic Design Essentials",
-									"type": "text"
-								},
-								{
-									"key": "price",
-									"value": "200",
+									"key": "ModuleID",
+									"value": "656ec2bf4bce5a16b07eb76c",
 									"type": "text"
 								}
 							]
@@ -341,13 +463,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE-URL}}/course-details/65530d025ac924e3d04c1152",
+							"raw": "{{BASE-URL}}/course-details/656ec94d7a6ce79d8c80c624",
 							"host": [
 								"{{BASE-URL}}"
 							],
 							"path": [
 								"course-details",
-								"65530d025ac924e3d04c1152"
+								"656ec94d7a6ce79d8c80c624"
 							],
 							"query": [
 								{
@@ -360,6 +482,53 @@
 					},
 					"response": []
 				},
+				{
+					"name": "Course By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE-URL}}/course-by-category/656ec2bf4bce5a16b07eb76c",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"course-by-category",
+								"656ec2bf4bce5a16b07eb76c"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "65530d025ac924e3d04c1152",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Popular Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE-URL}}/popular-course",
+							"host": [
+								"{{BASE-URL}}"
+							],
+							"path": [
+								"popular-course"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollment",
+			"item": [
 				{
 					"name": "Enroll Course",
 					"protocolProfileBehavior": {
@@ -376,7 +545,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userID\":\"6565e2fe5f5e0192da8e62ec\",\r\n    \"courseID\": \"65530d025ac924e3d04c1152\"\r\n}",
+							"raw": "{\r\n    \"userID\":\"656eb61f0199fa905515bbfa\",\r\n    \"courseID\": \"656ec94d7a6ce79d8c80c624\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -417,62 +586,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Popular Course",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/popular-course",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"popular-course"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Category",
-			"item": [
-				{
-					"name": "Get All Category",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/all-category",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"all-category"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Top Categories",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE-URL}}/top-categories",
-							"host": [
-								"{{BASE-URL}}"
-							],
-							"path": [
-								"top-categories"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -495,12 +608,12 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "M M A Tahmid",
+									"value": "Md. Sabir Hossain",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "abdfg048@gmail.com",
+									"value": "sabbirto13@gmail.com",
 									"type": "text"
 								},
 								{
@@ -515,13 +628,14 @@
 								},
 								{
 									"key": "phoneNumber",
-									"value": "01929723692",
+									"value": "01712345678",
 									"type": "text"
 								},
 								{
 									"key": "token",
-									"value": "{{TOKEN}}",
-									"type": "text"
+									"value": "",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -575,28 +689,29 @@
 							"formdata": [
 								{
 									"key": "courseID",
-									"value": "65530d025ac924e3d04c1152",
+									"value": "656ec94d7a6ce79d8c80c624",
 									"type": "text"
 								},
 								{
 									"key": "title",
-									"value": "Sematic Tag",
+									"value": "CSS",
 									"type": "text"
 								},
 								{
 									"key": "videoTitle",
-									"value": "Sematic Tag",
+									"value": "CSS in 100 Seconds",
 									"type": "text"
 								},
 								{
-									"key": "videoURL",
+									"key": "videos",
 									"type": "file",
-									"src": "/C:/Users/DCL/Desktop/Team-Dominators/demo2.mp4"
+									"src": "/C:/Users/DCL/Desktop/Dominators/CSS.mp4"
 								},
 								{
 									"key": "resource",
-									"value": "Sematic Tag",
-									"type": "text"
+									"value": "Demo",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "",
@@ -672,7 +787,7 @@
 		},
 		{
 			"key": "TOKEN",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlbW9AZ21haWwuY29tIiwicGFzc3dvcmQiOiJkZW1vQGdtYWlsLmNvbSIsImlhdCI6MTcwMTI2NDYzNywiZXhwIjoxNzAxODY5NDM3fQ.B_pLuwPAWotAj4BPVLRPqm_fanJBDgM4xHmb7oawZh0",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlbW9AZ21haWwuY29tIiwicGFzc3dvcmQiOiJkZW1vQGdtYWlsLmNvbSIsImlhdCI6MTcwMTc5NDI3OCwiZXhwIjoxNzAyMzk5MDc4fQ.75q_dH9J6A9YBqqj6v06qS5yV5nuAgnUnDAl81euNCU",
 			"type": "string"
 		}
 	]
