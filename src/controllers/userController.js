@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { EncodedToken } = require("../utility/token");
+const { EncodedToken } = require("../utility/Token");
 const { sendEmailWithNodeMailer } = require("../utility/sendEmailWithNodeMailer");
 const OTPModel = require("../models/otpModel");
 const UserModel = require("../models/userModel");
