@@ -6,16 +6,15 @@ const videoSchema = new mongoose.Schema({
 });
 
 // Schema
-const dataSchema = mongoose.Schema(
+const moduleSchema = mongoose.Schema(
   {
-    courseID: { type: mongoose.Schema.Types.ObjectId, required: true },
     title: { type: String, trim: true, required: true, unique: true },
+    courseID: { type: mongoose.Schema.Types.ObjectId, required: true },
     videos: [videoSchema],
-    resource: { type: String, required: true },
   },
   { timestamps: true, versionKey: false }
 );
 
 // Model
-const moduleLessonModel = mongoose.model("modules", dataSchema);
-module.exports = moduleLessonModel;
+const ModuleLessonModel = mongoose.model("Modules", moduleSchema);
+module.exports = ModuleLessonModel;

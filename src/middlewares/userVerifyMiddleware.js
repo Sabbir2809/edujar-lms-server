@@ -1,4 +1,4 @@
-const { DecodedToken } = require("../utility/Token");
+const { DecodedToken } = require("../utility/token");
 
 module.exports = async (req, res, next) => {
   const token = req.headers["token"];
