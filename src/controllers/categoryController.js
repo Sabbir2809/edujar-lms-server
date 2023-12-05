@@ -1,28 +1,47 @@
-const categoryModel = require("../model/categoryModel");
+const categoryService = require("../services/categoryService");
+const sendSuccessResponse = require("../utility/sendSuccessResponse");
 
-// all category
-exports.getAllCategory = async (req, res) => {
+// get All Category
+exports.getAllCategory = async (req, res, next) => {
   try {
-    const categories = await categoryModel.find({});
-    res.status(200).json({
-      success: true,
-      data: categories,
+    const result = await categoryService.getAllCategory();
+
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
-// top categories(public)
-exports.topCategories = async (req, res) => {
+// top Categories
+exports.topCategories = async (req, res, next) => {
   try {
-    const topCategories = await categoryModel.find({}).limit(4);
+    const result = await categoryService.topCategories();
 
-    res.status(200).json({
-      success: true,
-      data: topCategories,
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
+  }
+};
+
+// (admin) create a new Category
+exports.adminCreateNewCategory = async (req, res, next) => {
+  try {
+    const adminEmail = req.headers.email;
+    const reqBody = req.body;
+
+    const result = await categoryService.adminCreateNewCategory(req, res, adminEmail, reqBody);
+
+    sendSuccessResponse(res, {
+      statusCode: 201,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
   }
 };

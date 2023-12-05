@@ -1,46 +1,33 @@
-const instructorModel = require("../model/instructorModel");
-const userModel = require("../model/userModel");
-const cloudinary = require("../utility/cloudinaryConfig");
+const instructorService = require("../services/instructorService");
+const sendSuccessResponse = require("../utility/sendSuccessResponse");
 
 // Create Instructor(private)
-exports.addNewInstructor = async (req, res) => {
+exports.addNewInstructor = async (req, res, next) => {
   try {
     const adminEmail = req.headers.email;
-    const data = await userModel.findOne({ email: adminEmail });
-    if (data.role === "user") {
-      return res.status(403).json({ status: false, message: "Forbidden Access" });
-    }
+    const reqBody = req.body;
 
-    const { name, email, description, phoneNumber } = req.body;
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-      folder: "edujar/instructors",
+    const result = await instructorService.addNewInstructor(req, res, adminEmail, reqBody);
+
+    sendSuccessResponse(res, {
+      statusCode: 201,
+      data: result,
     });
-    const course = await new instructorModel({
-      name,
-      email,
-      description,
-      image: {
-        publicID: imageUpload.public_id,
-        url: imageUpload.secure_url,
-      },
-      phoneNumber,
-    });
-    await course.save();
-    res.status(200).json({ success: true, data: course });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
-// Get All Instructors(public)
-exports.getAllInstructor = async (req, res) => {
+// Get All Instructors
+exports.getAllInstructor = async (req, res, next) => {
   try {
-    const data = await instructorModel.find();
-    res.status(200).json({ success: true, data: data });
+    const result = await instructorService.getAllInstructor();
+
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };

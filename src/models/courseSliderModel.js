@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Schema
-const dataSchema = mongoose.Schema(
+const courseSliderSchema = mongoose.Schema(
   {
     title: { type: String, required: true },
     shortDesc: { type: String, required: true },
@@ -13,5 +13,5 @@ const dataSchema = mongoose.Schema(
 );
 
 // Model
-const courseSliderModel = mongoose.model("courseSliders", dataSchema);
-module.exports = courseSliderModel;
+const CourseSliderModel = mongoose.model("CourseSliders", courseSliderSchema);
+module.exports = CourseSliderModel;
