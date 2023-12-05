@@ -5,9 +5,9 @@ const helmet = require("helmet");
 const hpp = require("hpp");
 const mongoSanitize = require("express-mongo-sanitize");
 require("dotenv").config();
-const router = require("./routes/api");
-const notFound = require("./middlewares/notFound");
-const globalErrorHandler = require("./middlewares/globalErrorHandler");
+const router = require("./src/routes/api");
+const notFound = require("./src/middlewares/notFound");
+const globalErrorHandler = require("./src/middlewares/globalErrorHandler");
 
 // express app instance
 const app = express();
