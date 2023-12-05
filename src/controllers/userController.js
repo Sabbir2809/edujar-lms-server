@@ -1,11 +1,11 @@
 const bcrypt = require("bcrypt");
-const userModel = require("../model/userModel");
 const { EncodedToken } = require("../utility/Token");
 const { sendEmailWithNodeMailer } = require("../utility/sendEmailWithNodeMailer");
-const OTPModel = require("../model/otpModel");
+const OTPModel = require("../models/otpModel");
+const UserModel = require("../models/userModel");
 
 // Registration
-exports.registration = async (req, res) => {
+exports.registration = async (req, res, next) => {
   try {
     const { fullName, email, password } = req.body;
 
@@ -17,7 +17,7 @@ exports.registration = async (req, res) => {
     }
 
     // existing user
-    const existingUser = await userModel.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ success: false, message: "User Already Exist" });
     }
@@ -25,7 +25,7 @@ exports.registration = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 8);
 
     // create user
-    await userModel.create({
+    await UserModel.create({
       fullName,
       email,
       password: hashedPassword,
@@ -33,21 +33,21 @@ exports.registration = async (req, res) => {
 
     // response
     res.status(201).json({
-      status: true,
+      success: true,
       message: "User Registration Successful",
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };
 
 // Login
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     // Check if the user exists
-    const user = await userModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
     if (!user) {
       return res.status(401).json({ success: false, message: "Email is not registered" });
     }
@@ -62,57 +62,57 @@ exports.login = async (req, res) => {
 
     // response
     res.status(200).json({
-      status: true,
+      success: true,
       message: "User Login Successful",
       token: token,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };
 
 // User Profile Get
-exports.userProfileDetails = async (req, res) => {
+exports.userProfileDetails = async (req, res, next) => {
   try {
     const email = req.headers.email;
 
-    const data = await userModel.aggregate([{ $match: { email } }]);
+    const data = await UserModel.aggregate([{ $match: { email } }]);
 
     res.status(200).json({
-      status: true,
+      success: true,
       data: data,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };
 
 // Profile Update
-exports.userProfileUpdate = async (req, res) => {
+exports.userProfileUpdate = async (req, res, next) => {
   try {
     const email = req.headers.email;
     const profileBody = req.body;
 
-    const data = await userModel.updateOne({ email }, profileBody);
+    const data = await UserModel.updateOne({ email }, profileBody);
 
     res.status(200).json({
-      status: true,
+      success: true,
       data: data,
     });
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };
 
 // Verify Email
-exports.verifyEmail = async (req, res) => {
+exports.verifyEmail = async (req, res, next) => {
   try {
     const email = req.params.email;
     // OTP Generate
     const OTP = Math.floor(100000 + Math.random() * 900000);
 
     // Email Query
-    const existEmail = await userModel.aggregate([{ $match: { email } }, { $count: "total" }]);
+    const existEmail = await UserModel.aggregate([{ $match: { email } }, { $count: "total" }]);
 
     if (existEmail.length > 0) {
       // OTP Insert
@@ -129,19 +129,19 @@ exports.verifyEmail = async (req, res) => {
       await sendEmailWithNodeMailer(emailData);
 
       res.status(200).json({
-        status: true,
+        success: true,
         message: "Verification OTP Send, Please Check Your Given Email Address",
       });
     } else {
       res.status(400).json({ success: false, message: "Email Not Found" });
     }
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };
 
 // Verify OTP
-exports.verifyOTP = async (req, res) => {
+exports.verifyOTP = async (req, res, next) => {
   try {
     const email = req.params.email;
     const otp = req.params.otp;
@@ -157,7 +157,7 @@ exports.verifyOTP = async (req, res) => {
       );
 
       res.status(200).json({
-        status: true,
+        success: true,
         message: "Verify OTP",
         data: data,
       });
@@ -165,12 +165,12 @@ exports.verifyOTP = async (req, res) => {
       res.status(400).json({ success: false, message: "OTP Code Already Used" });
     }
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };
 
 // Reset Password
-exports.resetPassword = async (req, res) => {
+exports.resetPassword = async (req, res, next) => {
   try {
     const email = req.body.email;
     const otp = req.body.otp;
@@ -182,7 +182,7 @@ exports.resetPassword = async (req, res) => {
     if (OTPCount.length > 0) {
       // Hashed Password
       const hashedPassword = await bcrypt.hash(newPassword, 8);
-      const data = await userModel.updateOne({ email }, { password: hashedPassword });
+      const data = await UserModel.updateOne({ email }, { password: hashedPassword });
 
       res.status(200).json({
         status: true,
@@ -193,6 +193,6 @@ exports.resetPassword = async (req, res) => {
       res.status(400).json({ success: false, message: "Invalid Email or Password" });
     }
   } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
+    next(error);
   }
 };

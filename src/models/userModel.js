@@ -10,10 +10,15 @@ const userSchema = new mongoose.Schema(
     phoneNumber: { type: String },
     address: { type: String },
     role: { type: String, default: "user" },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    courses: [],
   },
   { timestamps: true, versionKey: false }
 );
 
 // model
-const userModel = mongoose.model("users", userSchema);
-module.exports = userModel;
+const UserModel = mongoose.model("Users", userSchema);
+module.exports = UserModel;
