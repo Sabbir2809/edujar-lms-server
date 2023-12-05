@@ -188,7 +188,19 @@ exports.courseByCategory = async (req, res) => {
         updatedAt: 0,
       },
     };
-    const data = await courseModel.aggregate([matchID, projectionStage]);
+    const categoriesJoin = {
+      $lookup: {
+        from: "categories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+    const data = await courseModel.aggregate([
+      matchID,
+      categoriesJoin,
+      projectionStage,
+    ]);
     res.status(200).json({ success: true, data: data });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
