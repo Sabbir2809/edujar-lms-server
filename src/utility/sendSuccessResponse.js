@@ -1,6 +1,6 @@
 const sendSuccessResponse = (res, data) => {
   res.status(data.statusCode).json({
-    status: true,
+    success: true,
     data: data.data,
   });
 };
