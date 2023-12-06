@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Schema
-const dataSchema = mongoose.Schema(
+const instructorSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -34,5 +34,5 @@ const dataSchema = mongoose.Schema(
 );
 
 // Model
-const instructorModel = mongoose.model("instructors", dataSchema);
-module.exports = instructorModel;
+const InstructorModel = mongoose.model("Instructors", instructorSchema);
+module.exports = InstructorModel;

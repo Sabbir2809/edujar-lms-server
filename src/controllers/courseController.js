@@ -1,13 +1,17 @@
-const cloudinary = require("../utility/cloudinaryConfig");
-const courseModel = require("../model/courseModel");
 const mongoose = require("mongoose");
+<<<<<<< HEAD
 const userModel = require("../model/userModel");
 const ObjectId = mongoose.Types.ObjectId;
+=======
+const sendSuccessResponse = require("../utility/sendSuccessResponse");
+const courseService = require("../services/courseService");
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 
 // (admin) create a new course
-exports.adminCreateNewCourse = async (req, res) => {
+exports.adminCreateNewCourse = async (req, res, next) => {
   try {
     const adminEmail = req.headers.email;
+<<<<<<< HEAD
     const data = await userModel.findOne({ email: adminEmail });
     if (data.role === "user") {
       return res
@@ -24,42 +28,26 @@ exports.adminCreateNewCourse = async (req, res) => {
       lessonID,
       courseAchievement,
     } = req.body;
+=======
+    const reqBody = req.body;
 
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-    const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-      folder: "edujar/thumbnail",
-    });
+    const result = await courseService.adminCreateNewCourse(req, res, adminEmail, reqBody);
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 
-    const course = await new courseModel({
-      title,
-      price,
-      description,
-      thumbnail: {
-        publicID: imageUpload.public_id,
-        url: imageUpload.secure_url,
-      },
-      instructorID,
-      categoryID,
-      lessonID,
-      courseAchievement,
-    });
-    await course.save();
-
-    res.status(200).json({
-      status: true,
-      data: course,
+    sendSuccessResponse(res, {
+      statusCode: 201,
+      data: result,
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
 // (admin) Update Course
-exports.adminUpdateExistingCourse = async (req, res) => {
+exports.adminUpdateExistingCourse = async (req, res, next) => {
   try {
     const adminEmail = req.headers.email;
+<<<<<<< HEAD
     const data = await userModel.findOne({ email: adminEmail });
     if (data.role === "user") {
       return res
@@ -67,22 +55,26 @@ exports.adminUpdateExistingCourse = async (req, res) => {
         .json({ status: false, message: "Forbidden Access" });
     }
 
+=======
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
     const courseId = req.params.id;
-    const updatePost = await courseModel.findByIdAndUpdate(courseId, req.body, {
-      new: true,
-    });
-    res.status(200).json({
-      status: true,
-      data: updatePost,
+    const reqBody = req.body;
+
+    const result = await courseService.adminUpdateExistingCourse(res, adminEmail, courseId, reqBody);
+
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
-// get all courses(public)
-exports.getAllCourse = async (req, res) => {
+// get all courses
+exports.getAllCourse = async (req, res, next) => {
   try {
+<<<<<<< HEAD
     const categoriesJoin = {
       $lookup: {
         from: "categories",
@@ -104,25 +96,25 @@ exports.getAllCourse = async (req, res) => {
     const projection = {
       $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
     };
+=======
+    const result = await courseService.getAllCourse();
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 
-    const course = await courseModel.aggregate([
-      categoriesJoin,
-      instructorJoin,
-      unwindCategory,
-      unwindInstructors,
-      projection,
-    ]);
-    res.status(200).json({ success: true, data: course });
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
-// single courseDetails (public)
-exports.courseDetails = async (req, res) => {
+// single courseDetails
+exports.courseDetails = async (req, res, next) => {
   try {
     const courseId = new mongoose.Types.ObjectId(req.params.id);
 
+<<<<<<< HEAD
     const match = { $match: { _id: courseId } };
     const categoriesJoin = {
       $lookup: {
@@ -145,34 +137,42 @@ exports.courseDetails = async (req, res) => {
     const projection = {
       $project: { "thumbnail.publicID": 0, "thumbnail._id": 0 },
     };
+=======
+    const result = await courseService.courseDetails(courseId);
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 
-    const course = await courseModel.aggregate([
-      match,
-      categoriesJoin,
-      instructorJoin,
-      unwindCategory,
-      unwindInstructors,
-      projection,
-    ]);
-    res.status(200).json({ success: true, data: course });
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
-// popular course (public)
-exports.popularCourse = async (req, res) => {
+// popular course
+exports.popularCourse = async (req, res, next) => {
   try {
+<<<<<<< HEAD
     const featuresCourse = await courseModel
       .find({})
       .sort({ createdAt: -1 })
       .limit(4);
     res.status(200).json({ success: true, data: featuresCourse });
+=======
+    const result = await courseService.popularCourse();
+
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
+    });
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    next(error);
   }
 };
 
+<<<<<<< HEAD
 // TODO: courseByCategory
 exports.courseByCategory = async (req, res) => {
   try {
@@ -206,5 +206,20 @@ exports.courseByCategory = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+=======
+// courseByCategory
+exports.courseByCategory = async (req, res, next) => {
+  try {
+    const categoryID = new mongoose.Types.ObjectId(req.params.id);
+>>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 
-// TODO:
+    const result = await courseService.courseByCategory(categoryID);
+
+    sendSuccessResponse(res, {
+      statusCode: 200,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
