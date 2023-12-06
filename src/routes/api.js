@@ -11,26 +11,22 @@ const moduleLessonController = require("../controllers/moduleLessonController");
 const videoUpload = require("../utility/cloudinaryStorage");
 const userVerifyMiddleware = require("../middlewares/userVerifyMiddleware");
 const adminVerifyMiddleware = require("../middlewares/adminVerifyMiddleware");
+const notificationController = require("../controllers/notificationController");
 
 // User Profile API Endpoint:
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
-<<<<<<< HEAD
 router.get(
   "/user-profile-details",
-  UserVerifyMiddleware,
+  userVerifyMiddleware,
   userController.userProfileDetails
 );
 router.put(
   "/user-profile-update",
-  UserVerifyMiddleware,
+  userVerifyMiddleware,
   userController.userProfileUpdate
 );
-=======
-router.get("/user-profile-details", userVerifyMiddleware, userController.userProfileDetails);
-router.put("/user-profile-update", userVerifyMiddleware, userController.userProfileUpdate);
 // :::::: password recover ::::::
->>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 router.get("/verify-email/:email", userController.verifyEmail);
 router.get("/verify-otp/:email/:otp", userController.verifyOTP);
 router.post("/reset-password", userController.resetPassword);
@@ -45,27 +41,21 @@ router.get("/all-instructor", instructorController.getAllInstructor);
 router.get("/course-by-category/:id", courseController.courseByCategory);
 
 // (Private) API Endpoint:
-<<<<<<< HEAD
 router.get(
   "/enroll-course",
-  UserVerifyMiddleware,
+  userVerifyMiddleware,
   enrollmentController.courseEnroll
 );
 router.get(
   "/enroll-course-info",
-  UserVerifyMiddleware,
+  userVerifyMiddleware,
   enrollmentController.enrollCourseInfo
 );
 router.get(
   "/get-all-lesson",
-  UserVerifyMiddleware,
+  userVerifyMiddleware,
   moduleLessonController.getAllLesson
 );
-=======
-router.get("/enroll-course", userVerifyMiddleware, enrollmentController.courseEnroll);
-router.get("/enroll-course-info", userVerifyMiddleware, enrollmentController.enrollCourseInfo);
-router.get("/get-all-lesson", userVerifyMiddleware, moduleLessonController.getAllLesson);
->>>>>>> e33268eada251067e0e15dae5cb4f2fca848955b
 
 // (Admin) API Endpoint:
 router.post(
@@ -102,6 +92,15 @@ router.post(
   videoUpload.array("videos"),
   moduleLessonController.adminCreateLesson
 );
-
+router.post("/create-notification", notificationController.createNotification);
+router.get("/get-all-notification", notificationController.getAllNotification);
+router.post(
+  "/update-notification/:id",
+  notificationController.updateNotification
+);
+router.delete(
+  "/delete-notification/:id",
+  notificationController.deleteNotification
+);
 // Exports
 module.exports = router;
