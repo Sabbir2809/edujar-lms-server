@@ -12,6 +12,9 @@ const videoUpload = require("../utility/cloudinaryStorage");
 const userVerifyMiddleware = require("../middlewares/userVerifyMiddleware");
 const adminVerifyMiddleware = require("../middlewares/adminVerifyMiddleware");
 
+// tahmid
+const blogController = require("../controllers/BlogController")
+
 // User Profile API Endpoint:
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
@@ -71,6 +74,16 @@ router.post(
   videoUpload.array("videos"),
   moduleLessonController.adminCreateLesson
 );
+
+
+
+// tahmid
+// Blog
+router.post("/create-blog", userVerifyMiddleware, adminVerifyMiddleware, blogController.CreateBlog);
+router.post("/update-blog/:id", userVerifyMiddleware, adminVerifyMiddleware, blogController.UpdateBlog)
+router.get("/get-all-blogs-by-id/:id", blogController.ShowBlogById);
+router.get("/get-all-blogs", blogController.getAllBlogs);
+
 
 
 // Exports
