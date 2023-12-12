@@ -92,7 +92,7 @@ exports.courseDetails = async (courseId) => {
   };
 
   const moduleJoin = {
-    $lookup: { from: "Modules", localField: "ModuleID", foreignField: "_id", as: "module" },
+    $lookup: { from: "modules", localField: "ModuleID", foreignField: "_id", as: "module" },
   };
 
   const unwindCategory = { $unwind: "$category" };
