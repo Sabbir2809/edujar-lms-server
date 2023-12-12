@@ -11,6 +11,8 @@ const moduleLessonController = require("../controllers/moduleLessonController");
 const videoUpload = require("../utility/cloudinaryStorage");
 const userVerifyMiddleware = require("../middlewares/userVerifyMiddleware");
 const adminVerifyMiddleware = require("../middlewares/adminVerifyMiddleware");
+const blogController = require("../controllers/blogController");
+const notificationController = require("../controllers/notificationController");
 
 // User Profile API Endpoint:
 router.post("/registration", userController.registration);
@@ -30,6 +32,12 @@ router.get("/course-details/:id", courseController.courseDetails);
 router.get("/popular-course", courseController.popularCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
 router.get("/course-by-category/:id", courseController.courseByCategory);
+
+// blogs
+router.post("/create-blog", userVerifyMiddleware, adminVerifyMiddleware, blogController.createBlog);
+router.post("/update-blog/:id", userVerifyMiddleware, adminVerifyMiddleware, blogController.updateBlog);
+router.get("/blogs", blogController.getAllBlogs);
+router.get("/blogs/:id", blogController.blogDetailsById);
 
 // (Private) API Endpoint:
 router.get("/enroll-course", userVerifyMiddleware, enrollmentController.courseEnroll);
@@ -71,6 +79,11 @@ router.post(
   videoUpload.array("videos"),
   moduleLessonController.adminCreateLesson
 );
+
+router.post("/create-notification", notificationController.createNotification);
+router.get("/get-all-notification", notificationController.getAllNotification);
+router.post("/update-notification/:id", notificationController.updateNotification);
+router.delete("/delete-notification/:id", notificationController.deleteNotification);
 
 // Exports
 module.exports = router;
