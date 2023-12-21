@@ -4,6 +4,8 @@ const { sendEmailWithNodeMailer } = require("../utility/sendEmailWithNodeMailer"
 const OTPModel = require("../models/otpModel");
 const UserModel = require("../models/userModel");
 const cloudinary = require("../utility/cloudinaryConfig");
+const EnrollmentModel = require("../models/enrollmentModel");
+const CourseModel = require("../models/courseModel");
 
 // Registration
 exports.registration = async (req, res, next) => {
@@ -222,6 +224,30 @@ exports.resetPassword = async (req, res, next) => {
     } else {
       res.status(400).json({ success: false, message: "Invalid Email or Password" });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// get enroll course
+exports.getEnrollCourse = async (req, res, next) => {
+  try {
+    const email = req.headers.email;
+
+    const user = await UserModel.find({ email });
+
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Email is not registered" });
+    }
+
+    const enrollCourseId = user[0].enrollCourse[0].courseId;
+
+    const result = await CourseModel.find({ _id: enrollCourseId });
+
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
   } catch (error) {
     next(error);
   }

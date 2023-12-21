@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    enrollCourse: [{ type: mongoose.Schema.Types.ObjectId }],
+    enrollCourse: [],
   },
   { timestamps: true, versionKey: false }
 );

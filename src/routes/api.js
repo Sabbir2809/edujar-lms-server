@@ -18,6 +18,7 @@ const notificationController = require("../controllers/notificationController");
 router.post("/registration", userController.registration);
 router.post("/login", userController.login);
 router.get("/user-profile-details", userVerifyMiddleware, userController.userProfileDetails);
+router.get("/get-enroll-course", userVerifyMiddleware, userController.getEnrollCourse);
 router.post(
   "/user-profile-update",
   userVerifyMiddleware,
