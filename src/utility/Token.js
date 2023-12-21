@@ -6,6 +6,9 @@ exports.EncodedToken = (user) => {
 };
 
 // decoded
-exports.DecodedToken = (token) => {
+exports.DecodedToken =(token) => {
   return jwt.verify(token, process.env.JWT_SECRET_KEY);
 };
+
+
+

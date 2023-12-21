@@ -1,25 +1,31 @@
 const bcrypt = require("bcrypt");
 const { EncodedToken } = require("../utility/Token");
-const { sendEmailWithNodeMailer } = require("../utility/sendEmailWithNodeMailer");
+const {
+  sendEmailWithNodeMailer,
+} = require("../utility/sendEmailWithNodeMailer");
 const OTPModel = require("../models/otpModel");
 const UserModel = require("../models/userModel");
+const cloudinary = require("../utility/cloudinaryConfig");
 
 // Registration
 exports.registration = async (req, res, next) => {
   try {
-    const { fullName, email,phoneNumber, password } = req.body;
+    const { fullName, email, phoneNumber, password } = req.body;
 
     // password validation
     if (password.length < 4) {
-      return res
-        .status(400)
-        .json({ success: false, message: "The length of User password can be minimum 4 characters" });
+      return res.status(400).json({
+        success: false,
+        message: "The length of User password can be minimum 4 characters",
+      });
     }
 
     // existing user
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ success: false, message: "User Already Exist" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User Already Exist" });
     }
     // Hashed Password
     const hashedPassword = await bcrypt.hash(password, 8);
@@ -28,7 +34,7 @@ exports.registration = async (req, res, next) => {
     await UserModel.create({
       fullName,
       email,
-	  phoneNumber,
+      phoneNumber,
       password: hashedPassword,
     });
 
@@ -50,12 +56,16 @@ exports.login = async (req, res, next) => {
     // Check if the user exists
     const user = await UserModel.findOne({ email });
     if (!user) {
-      return res.status(401).json({ success: false, message: "Email is not registered" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Email is not registered" });
     }
     // password matching
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: "Invalid Password" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid Password" });
     }
 
     // generate token
@@ -77,7 +87,7 @@ exports.userProfileDetails = async (req, res, next) => {
   try {
     const email = req.headers.email;
 
-    const data = await UserModel.aggregate([{ $match: { email } }]);
+    const data = await UserModel.aggregate([{ $match: { email:email } }]);
 
     res.status(200).json({
       success: true,
@@ -91,19 +101,50 @@ exports.userProfileDetails = async (req, res, next) => {
 // Profile Update
 exports.userProfileUpdate = async (req, res, next) => {
   try {
-    const email = req.headers.email;
-    const profileBody = req.body;
+    const userEmail = req.headers.email;
+    const { fullName,phoneNumber, address } = req.body;
 
-    const data = await UserModel.updateOne({ email }, profileBody);
+    if (req.file) {
+      // File was uploaded, process the image
+      const imageUpload = await cloudinary.uploader.upload(req.file.path, {
+        folder: "user-profile-images",
+      });
+
+      // Update with image data
+      await UserModel.updateOne(
+        { email: userEmail },
+        {
+
+          image: {
+            publicID: imageUpload.public_id,
+            url: imageUpload.secure_url,
+          },
+        },
+        { upsert: true }
+      );
+    } else {
+      // No file uploaded, update without image
+      await UserModel.updateOne(
+        { email: userEmail },
+        {
+          fullName,
+          phoneNumber,
+          address,
+        },
+
+      );
+    }
 
     res.status(200).json({
       success: true,
-      data: data,
+      message: 'Profile updated successfully',
     });
   } catch (error) {
     next(error);
   }
 };
+
+
 
 // Verify Email
 exports.verifyEmail = async (req, res, next) => {
@@ -113,7 +154,10 @@ exports.verifyEmail = async (req, res, next) => {
     const OTP = Math.floor(100000 + Math.random() * 900000);
 
     // Email Query
-    const existEmail = await UserModel.aggregate([{ $match: { email } }, { $count: "total" }]);
+    const existEmail = await UserModel.aggregate([
+      { $match: { email } },
+      { $count: "total" },
+    ]);
 
     if (existEmail.length > 0) {
       // OTP Insert
@@ -148,7 +192,10 @@ exports.verifyOTP = async (req, res, next) => {
     const otp = req.params.otp;
 
     // Email Query
-    const OTPCount = await OTPModel.aggregate([{ $match: { email, otp, status: 0 } }, { $count: "total" }]);
+    const OTPCount = await OTPModel.aggregate([
+      { $match: { email, otp, status: 0 } },
+      { $count: "total" },
+    ]);
 
     if (OTPCount.length > 0) {
       const data = await OTPModel.updateOne(
@@ -163,7 +210,9 @@ exports.verifyOTP = async (req, res, next) => {
         data: data,
       });
     } else {
-      res.status(400).json({ success: false, message: "OTP Code Already Used" });
+      res
+        .status(400)
+        .json({ success: false, message: "OTP Code Already Used" });
     }
   } catch (error) {
     next(error);
@@ -178,12 +227,18 @@ exports.resetPassword = async (req, res, next) => {
     const newPassword = req.body.password;
 
     // Email Query
-    const OTPCount = await OTPModel.aggregate([{ $match: { email, otp, status: 1 } }, { $count: "total" }]);
+    const OTPCount = await OTPModel.aggregate([
+      { $match: { email, otp, status: 1 } },
+      { $count: "total" },
+    ]);
 
     if (OTPCount.length > 0) {
       // Hashed Password
       const hashedPassword = await bcrypt.hash(newPassword, 8);
-      const data = await UserModel.updateOne({ email }, { password: hashedPassword });
+      const data = await UserModel.updateOne(
+        { email },
+        { password: hashedPassword }
+      );
 
       res.status(200).json({
         status: true,
@@ -191,7 +246,9 @@ exports.resetPassword = async (req, res, next) => {
         data: data,
       });
     } else {
-      res.status(400).json({ success: false, message: "Invalid Email or Password" });
+      res
+        .status(400)
+        .json({ success: false, message: "Invalid Email or Password" });
     }
   } catch (error) {
     next(error);

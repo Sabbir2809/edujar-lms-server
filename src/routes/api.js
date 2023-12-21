@@ -21,9 +21,10 @@ router.get(
   userVerifyMiddleware,
   userController.userProfileDetails
 );
-router.put(
+router.post(
   "/user-profile-update",
   userVerifyMiddleware,
+  upload.single("image"),
   userController.userProfileUpdate
 );
 // :::::: password recover ::::::
