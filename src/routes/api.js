@@ -6,6 +6,7 @@ const courseController = require("../controllers/courseController");
 const instructorController = require("../controllers/instructorController");
 const upload = require("../utility/multerConfig");
 const userController = require("../controllers/userController");
+const blogController = require("../controllers/blogController");
 const enrollmentController = require("../controllers/enrollmentController");
 const moduleLessonController = require("../controllers/moduleLessonController");
 const videoUpload = require("../utility/cloudinaryStorage");
