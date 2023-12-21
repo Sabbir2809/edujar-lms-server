@@ -37,6 +37,12 @@ router.get("/popular-course", courseController.popularCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
 router.get("/course-by-category/:id", courseController.courseByCategory);
 
+// blogs
+router.post("/create-blog", userVerifyMiddleware, adminVerifyMiddleware, blogController.createBlog);
+router.post("/update-blog/:id", userVerifyMiddleware, adminVerifyMiddleware, blogController.updateBlog);
+router.get("/blogs", blogController.getAllBlogs);
+router.get("/blogs/:id", blogController.blogDetailsById);
+
 // (Private) API Endpoint:
 router.get("/enroll-course", userVerifyMiddleware, enrollmentController.courseEnroll);
 router.get("/enroll-course-info", userVerifyMiddleware, enrollmentController.enrollCourseInfo);
