@@ -3,17 +3,19 @@ const { EncodedToken } = require("../utility/Token");
 const { sendEmailWithNodeMailer } = require("../utility/sendEmailWithNodeMailer");
 const OTPModel = require("../models/otpModel");
 const UserModel = require("../models/userModel");
+const cloudinary = require("../utility/cloudinaryConfig");
 
 // Registration
 exports.registration = async (req, res, next) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName, email, phoneNumber, password } = req.body;
 
     // password validation
     if (password.length < 4) {
-      return res
-        .status(400)
-        .json({ success: false, message: "The length of User password can be minimum 4 characters" });
+      return res.status(400).json({
+        success: false,
+        message: "The length of User password can be minimum 4 characters",
+      });
     }
 
     // existing user
@@ -28,6 +30,7 @@ exports.registration = async (req, res, next) => {
     await UserModel.create({
       fullName,
       email,
+      phoneNumber,
       password: hashedPassword,
     });
 
@@ -76,7 +79,7 @@ exports.userProfileDetails = async (req, res, next) => {
   try {
     const email = req.headers.email;
 
-    const data = await UserModel.aggregate([{ $match: { email } }]);
+    const data = await UserModel.aggregate([{ $match: { email: email } }]);
 
     res.status(200).json({
       success: true,
@@ -90,14 +93,41 @@ exports.userProfileDetails = async (req, res, next) => {
 // Profile Update
 exports.userProfileUpdate = async (req, res, next) => {
   try {
-    const email = req.headers.email;
-    const profileBody = req.body;
+    const userEmail = req.headers.email;
+    const { fullName, phoneNumber, address } = req.body;
 
-    const data = await UserModel.updateOne({ email }, profileBody);
+    if (req.file) {
+      // File was uploaded, process the image
+      const imageUpload = await cloudinary.uploader.upload(req.file.path, {
+        folder: "user-profile-images",
+      });
+
+      // Update with image data
+      await UserModel.updateOne(
+        { email: userEmail },
+        {
+          image: {
+            publicID: imageUpload.public_id,
+            url: imageUpload.secure_url,
+          },
+        },
+        { upsert: true }
+      );
+    } else {
+      // No file uploaded, update without image
+      await UserModel.updateOne(
+        { email: userEmail },
+        {
+          fullName,
+          phoneNumber,
+          address,
+        }
+      );
+    }
 
     res.status(200).json({
       success: true,
-      data: data,
+      message: "Profile updated successfully",
     });
   } catch (error) {
     next(error);
