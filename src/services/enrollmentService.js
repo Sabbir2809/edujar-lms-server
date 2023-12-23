@@ -10,16 +10,15 @@ exports.courseEnroll = async (res, userID, courseID) => {
     return res.status(404).json({ message: "You are not eligible to access this course" });
   }
 
-  await UserModel.findOneAndUpdate(
-    { _id: course._id },
+  await UserModel.findByIdAndUpdate(
+    userID,
     {
       $addToSet: {
-        courses: user._id,
+        enrollCourse: { courseId: courseID },
       },
     },
     {
-      upsert: true,
-      new: false,
+      new: true,
     }
   );
 

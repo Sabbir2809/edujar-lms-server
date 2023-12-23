@@ -90,8 +90,14 @@ exports.courseDetails = async (courseId) => {
   const instructorJoin = {
     $lookup: { from: "instructors", localField: "instructorID", foreignField: "_id", as: "instructor" },
   };
+
+  const moduleJoin = {
+    $lookup: { from: "modules", localField: "ModuleID", foreignField: "_id", as: "module" },
+  };
+
   const unwindCategory = { $unwind: "$category" };
   const unwindInstructors = { $unwind: "$instructor" };
+  const unwindModule = { $unwind: "$module" };
   const projection = {
     $project: { "thumbnail.publicID": 0, "thumbnail._id": 0, ModuleID: 0, instructorID: 0, categoryID: 0 },
   };
@@ -100,8 +106,10 @@ exports.courseDetails = async (courseId) => {
     match,
     categoriesJoin,
     instructorJoin,
+    moduleJoin,
     unwindCategory,
     unwindInstructors,
+    unwindModule,
     projection,
   ]);
 

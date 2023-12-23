@@ -9,10 +9,10 @@ const userSchema = new mongoose.Schema(
     image: [
       {
         publicID: {
-          type: String
+          type: String,
         },
         url: {
-          type: String
+          type: String,
         },
       },
     ],
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    courses: [],
+    enrollCourse: [],
   },
   { timestamps: true, versionKey: false }
 );

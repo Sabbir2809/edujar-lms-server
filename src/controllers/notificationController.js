@@ -1,15 +1,13 @@
 const NotificationModel = require("../models/notificationModel");
-const CreateService = require("../services/CreateService");
-const {
-  getAllNotificationService,
-  updateNotificationService,
-  deleteNotificationService,
-} = require("../services/NotificationService");
+const createService = require("../services/createService");
+const notificationService = require("../services/notificationService");
 const sendSuccessResponse = require("../utility/sendSuccessResponse");
+
 //create Notification
 exports.createNotification = async (req, res) => {
   try {
-    const result = await CreateService(req, NotificationModel);
+    const result = await createService(req, NotificationModel);
+
     sendSuccessResponse(res, {
       statusCode: 201,
       data: result,
@@ -21,7 +19,8 @@ exports.createNotification = async (req, res) => {
 // get All Notification
 exports.getAllNotification = async (req, res, next) => {
   try {
-    const result = await getAllNotificationService();
+    const result = await notificationService.getAllNotificationService();
+
     sendSuccessResponse(res, {
       statusCode: 200,
       data: result,
@@ -32,7 +31,8 @@ exports.getAllNotification = async (req, res, next) => {
 };
 exports.updateNotification = async (req, res, next) => {
   try {
-    const result = await updateNotificationService(req);
+    const result = await notificationService.updateNotificationService(req);
+
     sendSuccessResponse(res, {
       statusCode: 200,
       data: result,
@@ -43,7 +43,8 @@ exports.updateNotification = async (req, res, next) => {
 };
 exports.deleteNotification = async (req, res, next) => {
   try {
-    const result = await deleteNotificationService(req);
+    const result = await notificationService.deleteNotificationService(req);
+
     sendSuccessResponse(res, {
       statusCode: 200,
       data: result,

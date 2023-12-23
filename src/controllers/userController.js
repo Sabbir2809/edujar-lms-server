@@ -6,6 +6,8 @@ const {
 const OTPModel = require("../models/otpModel");
 const UserModel = require("../models/userModel");
 const cloudinary = require("../utility/cloudinaryConfig");
+const EnrollmentModel = require("../models/enrollmentModel");
+const CourseModel = require("../models/courseModel");
 
 // Registration
 exports.registration = async (req, res, next) => {
@@ -87,7 +89,7 @@ exports.userProfileDetails = async (req, res, next) => {
   try {
     const email = req.headers.email;
 
-    const data = await UserModel.aggregate([{ $match: { email:email } }]);
+    const data = await UserModel.aggregate([{ $match: { email: email } }]);
 
     res.status(200).json({
       success: true,
@@ -102,7 +104,7 @@ exports.userProfileDetails = async (req, res, next) => {
 exports.userProfileUpdate = async (req, res, next) => {
   try {
     const userEmail = req.headers.email;
-    const { fullName,phoneNumber, address } = req.body;
+    const { fullName, phoneNumber, address } = req.body;
 
     if (req.file) {
       // File was uploaded, process the image
@@ -114,7 +116,6 @@ exports.userProfileUpdate = async (req, res, next) => {
       await UserModel.updateOne(
         { email: userEmail },
         {
-
           image: {
             publicID: imageUpload.public_id,
             url: imageUpload.secure_url,
@@ -130,21 +131,18 @@ exports.userProfileUpdate = async (req, res, next) => {
           fullName,
           phoneNumber,
           address,
-        },
-
+        }
       );
     }
 
     res.status(200).json({
       success: true,
-      message: 'Profile updated successfully',
+      message: "Profile updated successfully",
     });
   } catch (error) {
     next(error);
   }
 };
-
-
 
 // Verify Email
 exports.verifyEmail = async (req, res, next) => {
@@ -250,6 +248,32 @@ exports.resetPassword = async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "Invalid Email or Password" });
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// get enroll course
+exports.getEnrollCourse = async (req, res, next) => {
+  try {
+    const email = req.headers.email;
+
+    const user = await UserModel.find({ email });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Email is not registered" });
+    }
+
+    const enrollCourseId = user[0].enrollCourse[0].courseId;
+
+    const result = await CourseModel.find({ _id: enrollCourseId });
+
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
   } catch (error) {
     next(error);
   }

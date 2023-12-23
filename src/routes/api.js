@@ -6,6 +6,7 @@ const courseController = require("../controllers/courseController");
 const instructorController = require("../controllers/instructorController");
 const upload = require("../utility/multerConfig");
 const userController = require("../controllers/userController");
+const blogController = require("../controllers/blogController");
 const enrollmentController = require("../controllers/enrollmentController");
 const moduleLessonController = require("../controllers/moduleLessonController");
 const videoUpload = require("../utility/cloudinaryStorage");
@@ -20,6 +21,11 @@ router.get(
   "/user-profile-details",
   userVerifyMiddleware,
   userController.userProfileDetails
+);
+router.get(
+  "/get-enroll-course",
+  userVerifyMiddleware,
+  userController.getEnrollCourse
 );
 router.post(
   "/user-profile-update",
@@ -40,6 +46,22 @@ router.get("/course-details/:id", courseController.courseDetails);
 router.get("/popular-course", courseController.popularCourse);
 router.get("/all-instructor", instructorController.getAllInstructor);
 router.get("/course-by-category/:id", courseController.courseByCategory);
+
+// blogs
+router.post(
+  "/create-blog",
+  userVerifyMiddleware,
+  adminVerifyMiddleware,
+  blogController.createBlog
+);
+router.post(
+  "/update-blog/:id",
+  userVerifyMiddleware,
+  adminVerifyMiddleware,
+  blogController.updateBlog
+);
+router.get("/blogs", blogController.getAllBlogs);
+router.get("/blogs/:id", blogController.blogDetailsById);
 
 // (Private) API Endpoint:
 router.get(
@@ -103,5 +125,6 @@ router.delete(
   "/delete-notification/:id",
   notificationController.deleteNotification
 );
+
 // Exports
 module.exports = router;
